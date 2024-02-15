@@ -52,6 +52,16 @@ Then, add six-dropzone to the modules section of nuxt.config.js:
 
 ```
 
+```html
+ <SixDropzone
+  @drop.prevent="dropIndex"
+  label="selecione o arquivo"
+></SixDropzone>
+```
+
+
+
+
 ## ⚖️ License
 
 Released under [MIT](/LICENSE) by [@4slan](https://github.com/4sllan).

@@ -10,12 +10,12 @@ interface ModuleOptions {
 }
 
 
-const PACKAGE_NAME: string = 'nuxt-dropzone'
+const PACKAGE_NAME: string = 'Six-dropzone'
 export default defineNuxtModule<ModuleOptions>({
 
     meta: {
         name: PACKAGE_NAME,
-        configKey: 'nuxtDropzone',
+        configKey: 'SixDropzone',
         // Compatibility constraints
         compatibility: {
             // Semver version of supported nuxt versions
