@@ -1,7 +1,7 @@
 <div align="center">
 <img src=".github/nuxt-simple-auth.svg" width="200">
 </div>
-<h1 align="center"> Auth Module Simple</h1>
+<h1 align="center"> 6 Dropzone</h1>
     <p align="center">Authentication support for Nuxt 3</p>
 <br>
 
@@ -37,7 +37,7 @@ yarn add nuxt-dropzone
 
 ### Installation
 
-Then, add nuxt-simple-auth to the modules section of nuxt.config.js:
+Then, add six-dropzone to the modules section of nuxt.config.js:
 
 ### Config
 
