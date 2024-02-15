@@ -17,8 +17,6 @@
 [![Nuxt][nuxt-src]][nuxt-href]
 [![Static Badge](https://img.shields.io/badge/-%E2%99%A5%20Sponsors-ec5cc6?style=flat-square)](https://github.com/sponsors/4sllan)
 
-
-
 ## Installation
 
 > nuxt-dropzone for Nuxt3 applications.
@@ -53,12 +51,57 @@ Then, add six-dropzone to the modules section of nuxt.config.js:
 ```
 
 ```html
- <SixDropzone
-  @drop.prevent="dropIndex"
-  label="selecione o arquivo"
-></SixDropzone>
-```
 
+<script setup>
+    const photo = ref()
+    const drop = (e) => {
+        photo.value.foto = e.dataTransfer.files[0];
+    };
+</script>
+<template>
+    <SixDropzone
+            @drop.prevent="drop"
+    ></SixDropzone>
+</template>
+```
+## Props
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td>addImages</td>
+    <td>string</td>
+    <td>undefined</td>
+  </tr>
+  <tr>
+    <td>label</td>
+    <td>string</td>
+    <td>Select File</td>
+  </tr>
+</table>
+
+## Events
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+  <tr>
+    <td>drop</td>
+  </tr>
+</table>
+
+## Slots
+<table>
+  <tr>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td>The default Vue slot.</td>
+  </tr>
+</table>
 
 
 
