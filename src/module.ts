@@ -2,9 +2,7 @@ import {
     useLogger,
     createResolver,
     defineNuxtModule,
-    addServerHandler,
-    addPlugin,
-    addRouteMiddleware
+    addComponent
 } from '@nuxt/kit'
 
 interface ModuleOptions {
@@ -29,5 +27,14 @@ export default defineNuxtModule<ModuleOptions>({
         const logger = useLogger(PACKAGE_NAME)
 
         const {resolve} = createResolver(import.meta.url)
+
+
+        addComponent({
+            name: "six-dropzone",
+            filePath: resolve(`./runtime/dropzone.vue`),
+            pascalName: "SixDropzone",
+            global: false,
+            mode: 'all',
+        })
     }
 })
