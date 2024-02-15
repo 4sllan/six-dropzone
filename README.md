@@ -46,7 +46,7 @@ Then, add six-dropzone to the modules section of nuxt.config.js:
 ``` js
 {
      modules: [
-        'nuxt-dropzone',
+        'six-dropzone',
     ]
 },
 
