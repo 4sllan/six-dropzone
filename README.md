@@ -6,7 +6,7 @@
 <br>
 
 
-<h1>Nuxt Simple Auth</h1>
+<h1>6 Dropzone</h1>
 <br>
 
 [![Static Badge](https://img.shields.io/badge/NPM:nuxt-simple-auth?style=flat-square&colorA=18181B&colorB=28CF8D)](https://www.npmjs.com/package/nuxt-simple-auth)
