@@ -2,7 +2,7 @@
 <img src=".github/six-dropzone.svg" width="200">
 </div>
 <h1 align="center"> 6 Dropzone</h1>
-    <p align="center">Dropzone support for Nuxt 3</p>
+    <p align="center">6 Dropzone support for Nuxt 3</p>
 <br>
 
 
@@ -26,11 +26,11 @@
 ## Quick Start
 
 ```sh
-npm i nuxt-dropzone
+npm i six-dropzone
 ```
 
 ```sh
-yarn add nuxt-dropzone
+yarn add six-dropzone
 ```
 
 ## Setup
