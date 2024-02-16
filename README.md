@@ -64,8 +64,9 @@ Then, add six-dropzone to the modules section of nuxt.config.js:
     ></SixDropzone>
 </template>
 ```
-## Props
-<table>
+<div style="display: flex">
+<h2Props
+<table style="width: 100%; max-width: 100%">
   <tr>
     <th>Name</th>
     <th>Type</th>
@@ -83,8 +84,11 @@ Then, add six-dropzone to the modules section of nuxt.config.js:
   </tr>
 </table>
 
+</div>
+
+
 ## Events
-<table>
+<table style="width: 100%">
   <tr>
     <th>Name</th>
   </tr>
@@ -94,7 +98,7 @@ Then, add six-dropzone to the modules section of nuxt.config.js:
 </table>
 
 ## Slots
-<table>
+<table style="width: 100%">
   <tr>
     <th>Default</th>
   </tr>

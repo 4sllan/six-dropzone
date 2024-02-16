@@ -1,8 +1,8 @@
 {
   "name": "six-dropzone",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Nuxt.js 3 Dropzone",
-  "repository": "https://github.com/4sllan/nuxt-dropzone",
+  "repository": "https://github.com/4sllan/six-dropzone",
   "author": "Aslan Gama <@4slan>",
   "license": "MIT",
   "type": "module",
