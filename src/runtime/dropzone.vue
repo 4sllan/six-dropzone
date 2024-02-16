@@ -1,12 +1,12 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import {ref, onMounted} from 'vue'
 
 const props = defineProps({
   addImages: {
     type: String,
     default: ""
   },
-  label:{
+  label: {
     type: String,
     default: "Select File"
   }
@@ -107,7 +107,7 @@ onMounted(() => {
   >
     <div v-if="!dropzoneFile" class="dropzone_content">
       <slot name="default"></slot>
-      <label for="dropzoneFile">{{label}}</label>
+      <label for="dropzoneFile">{{ label }}</label>
     </div>
     <div
         v-else
@@ -119,7 +119,13 @@ onMounted(() => {
         :class="{'_overlay' : overlay}"
     >
       <div class="content" @click.prevent="dropzoneClear">
-<!--        <XCircleIcon size="4x" class="text-white"/>-->
+        <i>
+          <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="15" y1="9" x2="9" y2="15"/>
+            <line x1="9" y1="9" x2="15" y2="15"/>
+          </svg>
+        </i>
       </div>
     </div>
     <input type="file" id="dropzoneFile" class="dropzoneFile" @change="selectedFile" ref="dropzoneInput"/>
@@ -185,6 +191,12 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     transform: translate(-50%, -50%);
+
+    svg{
+      stroke: white;
+      width: 60px;
+      height: 60px;
+    }
   }
 }
 

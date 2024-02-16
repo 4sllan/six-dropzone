@@ -102,32 +102,38 @@ export default {
 
         const template = `
              <div
-                      @dragenter.prevent="toggleActive"
-                      @dragleave.prevent="toggleActive"
-                      @dragover.prevent
-                      @drop.prevent="toggleActive"
-                      :class="{ 'active-dropzone': active}"
-                      class="dropzone"
-                  >
-                    <div v-if="!dropzoneFile" class="dropzone_content">
-                      <slot name="default"></slot>
-                      <label for="dropzoneFile">{{label}}</label>
-                    </div>
-                    <div
-                        v-else
-                        class="dropzoneImg"
-                        ref="dropzoneImg"
-                        id="dropzoneImg"
-                        @mouseover="overlay = true"
-                        @mouseleave="overlay = false"
-                        :class="{'_overlay' : overlay}"
-                    >
-                      <div class="content" @click.prevent="dropzoneClear">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-                      </div>
-                    </div>
-                    <input type="file" id="dropzoneFile" class="dropzoneFile" @change="selectedFile" ref="dropzoneInput"/>
+                  @dragenter.prevent="toggleActive"
+                  @dragleave.prevent="toggleActive"
+                  @dragover.prevent
+                  @drop.prevent="toggleActive"
+                  :class="{ 'active-dropzone': active}"
+                  class="dropzone"
+              >
+                <div v-if="!dropzoneFile" class="dropzone_content">
+                  <slot name="default"></slot>
+                  <label for="dropzoneFile">{{ label }}</label>
+                </div>
+                <div
+                    v-else
+                    class="dropzoneImg"
+                    ref="dropzoneImg"
+                    id="dropzoneImg"
+                    @mouseover="overlay = true"
+                    @mouseleave="overlay = false"
+                    :class="{'_overlay' : overlay}"
+                >
+                  <div class="content" @click.prevent="dropzoneClear">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                         class="feather feather-x-circle">
+                      <circle cx="12" cy="12" r="10"/>
+                      <line x1="15" y1="9" x2="9" y2="15"/>
+                      <line x1="9" y1="9" x2="15" y2="15"/>
+                    </svg>
                   </div>
+                </div>
+                <input type="file" id="dropzoneFile" class="dropzoneFile" @change="selectedFile" ref="dropzoneInput"/>
+              </div>
             `
 
         return () => [
