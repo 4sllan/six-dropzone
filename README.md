@@ -3,7 +3,7 @@
 <p align="center">6 Dropzone support for Nuxt 3</p>
 </div>
 
-<h1>6 Dropzone</h1>
+
 <br>
 
 [![Static Badge](https://img.shields.io/badge/NPM:six-dropzone?style=flat-square&colorA=18181B&colorB=28CF8D)](https://www.npmjs.com/package/six-dropzone)
@@ -61,9 +61,10 @@ Then, add six-dropzone to the modules section of nuxt.config.js:
     ></SixDropzone>
 </template>
 ```
-<div style="display: flex">
-<h2Props
-<table style="width: 100%; max-width: 100%">
+
+## Props
+
+<table>
   <tr>
     <th>Name</th>
     <th>Type</th>
@@ -81,11 +82,9 @@ Then, add six-dropzone to the modules section of nuxt.config.js:
   </tr>
 </table>
 
-</div>
-
-
 ## Events
-<table style="width: 100%">
+
+<table>
   <tr>
     <th>Name</th>
   </tr>
@@ -95,7 +94,8 @@ Then, add six-dropzone to the modules section of nuxt.config.js:
 </table>
 
 ## Slots
-<table style="width: 100%">
+
+<table>
   <tr>
     <th>Default</th>
   </tr>
@@ -103,8 +103,6 @@ Then, add six-dropzone to the modules section of nuxt.config.js:
     <td>The default Vue slot.</td>
   </tr>
 </table>
-
-
 
 ## ⚖️ License
 
