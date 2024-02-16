@@ -1,10 +1,7 @@
 <div align="center">
-<img src=".github/six-dropzone.svg" width="200">
+<img src=".github/six-dropzone.svg" width="400">
+<p align="center">6 Dropzone support for Nuxt 3</p>
 </div>
-<h1 align="center"> 6 Dropzone</h1>
-    <p align="center">6 Dropzone support for Nuxt 3</p>
-<br>
-
 
 <h1>6 Dropzone</h1>
 <br>
@@ -19,7 +16,7 @@
 
 ## Installation
 
-> nuxt-dropzone for Nuxt3 applications.
+> six-dropzone for Nuxt3 applications.
 
 ## Quick Start
 
