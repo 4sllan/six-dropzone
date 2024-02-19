@@ -7,7 +7,7 @@
 <br>
 
 [![Static Badge](https://img.shields.io/badge/NPM:six-dropzone?style=flat-square&colorA=18181B&colorB=28CF8D)](https://www.npmjs.com/package/six-dropzone)
-[![Static Badge](https://img.shields.io/badge/GITHUB:six-dropzone?style=flat-square&colorA=18181B&colorB=28CF8D)](https://github.com/4slanK/six-dropzone)
+[![Static Badge](https://img.shields.io/badge/GITHUB:six-dropzone?style=flat-square&colorA=18181B&colorB=28CF8D)](https://github.com/4sllan/six-dropzone)
 [![npm version](https://img.shields.io/npm/v/six-dropzone/latest.svg?style=flat-square&colorA=18181B&colorB=28CF8D)](https://www.npmjs.com/package/six-dropzone)
 ![GitHub License][license]
 [![npm downloads](https://img.shields.io/npm/dt/six-dropzone.svg?style=flat-square&colorA=18181B&colorB=28CF8D)](https://www.npmjs.com/package/six-dropzone)
@@ -80,6 +80,11 @@ Then, add six-dropzone to the modules section of nuxt.config.js:
     <td>string</td>
     <td>Select File</td>
   </tr>
+  <tr>
+    <td>error-messages</td>
+    <td>string | string[]</td>
+    <td>[]</td>
+  </tr>
 </table>
 
 ## Events
@@ -87,9 +92,15 @@ Then, add six-dropzone to the modules section of nuxt.config.js:
 <table>
   <tr>
     <th>Name</th>
+    <th>Type</th>
   </tr>
   <tr>
     <td>drop</td>
+    <td>[File]</td>
+  </tr>
+  <tr>
+    <td>update:modelValue</td>
+    <td>[File]</td>
   </tr>
 </table>
 
