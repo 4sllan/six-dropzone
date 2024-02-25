@@ -4,6 +4,10 @@
   "description": "Nuxt.js 3 Dropzone",
   "repository": "https://github.com/4sllan/six-dropzone",
   "author": "Aslan Gama <@4slan>",
+  "keywords": [
+    "dropzone",
+    "Nuxt.js 3"
+  ],
   "license": "MIT",
   "type": "module",
   "exports": {

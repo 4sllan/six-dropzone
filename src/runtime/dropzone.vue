@@ -129,6 +129,11 @@ onMounted(() => {
       </div>
     </div>
     <input type="file" id="dropzoneFile" class="dropzoneFile" @change="selectedFile" ref="dropzoneInput"/>
+    <div class="v-input__details">
+      <div class="v-messages" role="alert" aria-live="polite" id="input-39-messages">
+        <div class="v-messages__message">O campo nome é obrigatório</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -192,7 +197,7 @@ onMounted(() => {
     align-items: center;
     transform: translate(-50%, -50%);
 
-    svg{
+    svg {
       stroke: white;
       width: 60px;
       height: 60px;

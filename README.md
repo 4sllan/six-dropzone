@@ -14,11 +14,35 @@
 [![Nuxt][nuxt-src]][nuxt-href]
 [![Static Badge](https://img.shields.io/badge/-%E2%99%A5%20Sponsors-ec5cc6?style=flat-square)](https://github.com/sponsors/4sllan)
 
+[Demo online](https://codesandbox.io/s/)
+
+
+---
+
+#### Table of Content
+
+- [Features](#features)
+- [Demo](#demo)
+- [Installation](#installation)
+- [Usage](#usage)
+- [API](#api)
+    * [Props](#props)
+    * [Events](#events)
+    * [Slots](#slots)
+
+## Features
+
+
+
+## Demo
+
+[![view six-dropzone](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/)
+
+## Setup
+
 ## Installation
 
 > six-dropzone for Nuxt3 applications.
-
-## Quick Start
 
 ```sh
 npm i six-dropzone
@@ -27,12 +51,6 @@ npm i six-dropzone
 ```sh
 yarn add six-dropzone
 ```
-
-## Setup
-
-### Installation
-
-Then, add six-dropzone to the modules section of nuxt.config.js:
 
 ### Config
 
@@ -46,6 +64,8 @@ Then, add six-dropzone to the modules section of nuxt.config.js:
 },
 
 ```
+
+## Usage
 
 ```html
 
@@ -62,58 +82,28 @@ Then, add six-dropzone to the modules section of nuxt.config.js:
 </template>
 ```
 
-## Props
+## API
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Type</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td>addImages</td>
-    <td>string</td>
-    <td>undefined</td>
-  </tr>
-  <tr>
-    <td>label</td>
-    <td>string</td>
-    <td>Select File</td>
-  </tr>
-  <tr>
-    <td>error-messages</td>
-    <td>string | string[]</td>
-    <td>[]</td>
-  </tr>
-</table>
+### Props
 
-## Events
+| Name             | Type              | Default Value | Description                                                                                                                                                                              |
+|------------------|-------------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `addImages`      | `String`          | `undefined`   | The image URL.                                                                                                                                                                           |
+| `label`          | `String`          | `Select File` | Sets the button text                                                                                                                                                                     |
+| `error-messages` | `String/String[]` | `[]`          | Puts the input in an error state and passes through custom error messages. Will be combined with any validations that occur from the rules prop. This field will not trigger validation. |
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Type</th>
-  </tr>
-  <tr>
-    <td>drop</td>
-    <td>[File]</td>
-  </tr>
-  <tr>
-    <td>update:modelValue</td>
-    <td>[File]</td>
-  </tr>
-</table>
+### Events
 
-## Slots
+| Name                | Type     | Description                                                   | 
+|---------------------|----------|---------------------------------------------------------------|
+| `drop`              | `[File]` | To load video and iframe, should be Youtube/Vimeo video link. |
+| `update:modelValue` | `[File]` | Event that is emitted when the component’s model changes.     |
 
-<table>
-  <tr>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td>The default Vue slot.</td>
-  </tr>
-</table>
+### Slots
+
+| Name      | Description           | 
+|-----------|-----------------------|
+| `Default` | The default Vue slot. |
 
 ## ⚖️ License
 
