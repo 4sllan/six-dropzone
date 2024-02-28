@@ -94,10 +94,10 @@ yarn add six-dropzone
 
 ### Events
 
-| Name                | Type     | Description                                                   | 
-|---------------------|----------|---------------------------------------------------------------|
-| `drop`              | `[File]` | To load video and iframe, should be Youtube/Vimeo video link. |
-| `update:modelValue` | `[File]` | Event that is emitted when the component’s model changes.     |
+| Name                | Type     | Description                                               | 
+|---------------------|----------|-----------------------------------------------------------|
+| `drop`              | `[File]` | drop value of the component.                              |
+| `update:modelValue` | `[File]` | Event that is emitted when the component’s model changes. |
 
 ### Slots
 
