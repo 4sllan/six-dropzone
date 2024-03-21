@@ -32,7 +32,28 @@ let dropzoneFile = ref()
 
 
 const toggleActive = (e) => {
-  console.log(e.dataTransfer.files)
+  if (props.multiple) {
+    let arr = []
+    arr.push(...e.dataTransfer.files);
+    dropzoneFile.value = arr
+    active.value = !active.value;
+    overlay.value = new Array()
+
+    if (dropzoneFile.value) {
+      for (let i in dropzoneFile.value) {
+        let reader = new FileReader();
+
+        reader.readAsDataURL(dropzoneFile.value[i]);
+
+        reader.onloadend = function () {
+          dropzoneImg.value[i].style.backgroundImage = `url(${reader.result})`;
+        }
+      }
+    } else {
+      dropzoneImg.value.style.backgroundImage = "url('')";
+    }
+    return
+  }
 
   dropzoneFile.value = e.dataTransfer.files[0];
   active.value = !active.value;
