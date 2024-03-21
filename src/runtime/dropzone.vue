@@ -28,8 +28,7 @@ const overlay = ref(false)
 const active = ref(false)
 const dropzoneImg = ref()
 const dropzoneInput = ref()
-let dropzoneFile = ref("")
-const dropzoneImgMultiple = ref()
+let dropzoneFile = ref()
 
 
 const toggleActive = (e) => {
@@ -54,9 +53,9 @@ const toggleActive = (e) => {
 
 const selectedFile = () => {
   if (props.multiple) {
-
-    dropzoneFile.value = dropzoneInput.value.files;
-    dropzoneImgMultiple.value = dropzoneFile.value.length;
+    let arr = []
+    arr.push(...dropzoneInput.value.files);
+    dropzoneFile.value = arr
     overlay.value = new Array()
 
     if (dropzoneFile.value) {
@@ -95,13 +94,16 @@ const dropzoneClear = () => {
   emit('update:modelValue', "")
 }
 
-const dropzoneClearMultiple = (index) => {
-  let FileArr = []
-  FileArr.push(...dropzoneFile.value)
-  FileArr.splice(index, 1)
-  dropzoneFile.value = FileArr
+const dropzoneClearMultiple = (item, index) => {
+  delete dropzoneFile.value[index];
+  dropzoneImg.value[index].remove()
 
   emit('update:modelValue', "")
+
+  if (!dropzoneFile.value.length) {
+    dropzoneFile.value = null
+    dropzoneImg.value = null
+  }
 }
 
 const imageUrlToBase64 = async (url) => {
@@ -173,10 +175,10 @@ onMounted(() => {
     </div>
     <div
         class="dropzoneImgMultiple"
-        :style="`grid-template-columns: repeat(${dropzoneImgMultiple / 2}, minmax(0, 1fr));`"
+        :style="`grid-template-columns: repeat(${dropzoneFile.length / 2}, minmax(0, 1fr));`"
         v-else
     >
-      <template v-for="(i, index) in dropzoneImgMultiple">
+      <template v-for="(item, index) in dropzoneFile">
         <div
             class="dropzoneImg"
             ref=dropzoneImg
@@ -185,7 +187,7 @@ onMounted(() => {
             @mouseleave="overlay[index] = false"
             :class="{'_overlay' : overlay[index]}"
         >
-          <div class="content" @click.prevent="dropzoneClearMultiple(index)">
+          <div class="content" @click.prevent="dropzoneClearMultiple(item, index)">
             <i>
               <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12" cy="12" r="10"/>
@@ -289,6 +291,7 @@ onMounted(() => {
 .dropzoneImgMultiple {
   display: grid;
   gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 
   .dropzoneImg {
     width: 200px;
