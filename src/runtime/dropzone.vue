@@ -4,11 +4,13 @@ import {ref, onMounted} from 'vue'
 const props = defineProps({
   addImages: {
     type: String,
-    default: ""
+    default: "",
+    required: false
   },
   label: {
     type: String,
-    default: "Select File"
+    default: "Select File",
+    required: false
   },
   multiple: {
     type: Boolean,
@@ -33,9 +35,7 @@ let dropzoneFile = ref()
 
 const toggleActive = (e) => {
   if (props.multiple) {
-    let arr = []
-    arr.push(...e.dataTransfer.files);
-    dropzoneFile.value = arr
+    dropzoneFile.value = new Array(...e.dataTransfer.files)
     active.value = !active.value;
     overlay.value = new Array()
 
@@ -74,9 +74,7 @@ const toggleActive = (e) => {
 
 const selectedFile = () => {
   if (props.multiple) {
-    let arr = []
-    arr.push(...dropzoneInput.value.files);
-    dropzoneFile.value = arr
+    dropzoneFile.value = new Array(...dropzoneInput.value.files)
     overlay.value = new Array()
 
     if (dropzoneFile.value) {
@@ -116,8 +114,7 @@ const dropzoneClear = () => {
 }
 
 const dropzoneClearMultiple = (item, index) => {
-  delete dropzoneFile.value[index];
-  dropzoneImg.value[index].remove()
+  dropzoneFile.value.splice(index, 1)
 
   emit('update:modelValue', "")
 
@@ -196,7 +193,6 @@ onMounted(() => {
     </div>
     <div
         class="dropzoneImgMultiple"
-        :style="`grid-template-columns: repeat(${dropzoneFile.length / 2}, minmax(0, 1fr));`"
         v-else
     >
       <template v-for="(item, index) in dropzoneFile">
@@ -312,11 +308,12 @@ onMounted(() => {
 .dropzoneImgMultiple {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: auto auto auto auto;
 
   .dropzoneImg {
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 120px;
+    background-size: cover;
     position: relative;
   }
 }

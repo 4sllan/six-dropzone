@@ -3,7 +3,8 @@ import SixDropzone from '../../src/runtime/dropzone.vue'
 
 const photo = ref()
 const drop = (e) => {
-  photo.value.foto = e.dataTransfer.files[0];
+  console.log(e)
+  photo.value = e.dataTransfer.files;
 };
 </script>
 
