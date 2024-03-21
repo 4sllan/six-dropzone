@@ -9,6 +9,16 @@ const props = defineProps({
   label: {
     type: String,
     default: "Select File"
+  },
+  multiple: {
+    type: Boolean,
+    default: false,
+    required: false
+  },
+  errorMessages: {
+    type: String,
+    default: "",
+    required: false
   }
 })
 
@@ -19,9 +29,12 @@ const active = ref(false)
 const dropzoneImg = ref()
 const dropzoneInput = ref()
 let dropzoneFile = ref("")
+const dropzoneImgMultiple = ref()
 
 
 const toggleActive = (e) => {
+  console.log(e.dataTransfer.files)
+
   dropzoneFile.value = e.dataTransfer.files[0];
   active.value = !active.value;
 
@@ -40,6 +53,27 @@ const toggleActive = (e) => {
 };
 
 const selectedFile = () => {
+  if (props.multiple) {
+
+    dropzoneFile.value = dropzoneInput.value.files;
+    dropzoneImgMultiple.value = dropzoneFile.value.length;
+    overlay.value = new Array()
+
+    if (dropzoneFile.value) {
+      for (let i in dropzoneFile.value) {
+        let reader = new FileReader();
+
+        reader.readAsDataURL(dropzoneFile.value[i]);
+
+        reader.onloadend = function () {
+          dropzoneImg.value[i].style.backgroundImage = `url(${reader.result})`;
+        }
+      }
+    } else {
+      dropzoneImg.value.style.backgroundImage = "url('')";
+    }
+    return
+  }
 
   dropzoneFile.value = dropzoneInput.value.files[0];
 
@@ -58,6 +92,15 @@ const selectedFile = () => {
 
 const dropzoneClear = () => {
   dropzoneFile.value = ""
+  emit('update:modelValue', "")
+}
+
+const dropzoneClearMultiple = (index) => {
+  let FileArr = []
+  FileArr.push(...dropzoneFile.value)
+  FileArr.splice(index, 1)
+  dropzoneFile.value = FileArr
+
   emit('update:modelValue', "")
 }
 
@@ -110,7 +153,7 @@ onMounted(() => {
       <label for="dropzoneFile">{{ label }}</label>
     </div>
     <div
-        v-else
+        v-else-if="!props.multiple"
         class="dropzoneImg"
         ref="dropzoneImg"
         id="dropzoneImg"
@@ -128,10 +171,43 @@ onMounted(() => {
         </i>
       </div>
     </div>
-    <input type="file" id="dropzoneFile" class="dropzoneFile" @change="selectedFile" ref="dropzoneInput"/>
-    <div class="v-input__details">
-      <div class="v-messages" role="alert" aria-live="polite" id="input-39-messages">
-        <div class="v-messages__message">O campo nome é obrigatório</div>
+    <div
+        class="dropzoneImgMultiple"
+        :style="`grid-template-columns: repeat(${dropzoneImgMultiple / 2}, minmax(0, 1fr));`"
+        v-else
+    >
+      <template v-for="(i, index) in dropzoneImgMultiple">
+        <div
+            class="dropzoneImg"
+            ref=dropzoneImg
+            :id="`dropzoneImg${index}`"
+            @mouseover="overlay[index] = true"
+            @mouseleave="overlay[index] = false"
+            :class="{'_overlay' : overlay[index]}"
+        >
+          <div class="content" @click.prevent="dropzoneClearMultiple(index)">
+            <i>
+              <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="15" y1="9" x2="9" y2="15"/>
+                <line x1="9" y1="9" x2="15" y2="15"/>
+              </svg>
+            </i>
+          </div>
+        </div>
+      </template>
+    </div>
+    <input
+        type="file"
+        id="dropzoneFile"
+        class="dropzoneFile"
+        @change="selectedFile"
+        :multiple="multiple"
+        ref="dropzoneInput"
+    />
+    <div class="input__details" v-if="props.errorMessages">
+      <div class="messages" role="alert" aria-live="polite">
+        <div class="messages__message">{{ props.errorMessages }}</div>
       </div>
     </div>
   </div>
@@ -208,6 +284,17 @@ onMounted(() => {
 .dropzoneImg._overlay .content {
   display: flex;
   transition: 0.3s ease all;
+}
+
+.dropzoneImgMultiple {
+  display: grid;
+  gap: 1rem;
+
+  .dropzoneImg {
+    width: 200px;
+    height: 200px;
+    position: relative;
+  }
 }
 
 ._overlay::before {
