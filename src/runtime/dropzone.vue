@@ -143,12 +143,11 @@ const imageUrlToBase64 = async (url) => {
 
 onMounted(() => {
   setTimeout(() => {
-
     if (props.multiple && Array.isArray(props.addImages)) {
       dropzoneFile.value = new Array([]);
       overlay.value = []
 
-      props.addImages.map((value, key) => {
+      props.addImages.forEach((value, key) => {
         imageUrlToBase64(value.path)
             .then((response) => {
               if (!response) {
