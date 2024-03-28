@@ -3,7 +3,7 @@ import {ref, onMounted} from 'vue'
 
 const props = defineProps({
   addImages: {
-    type: String,
+    type: [String, Array],
     default: "",
     required: false
   },
@@ -37,7 +37,7 @@ const toggleActive = (e) => {
   if (props.multiple) {
     dropzoneFile.value = new Array(...e.dataTransfer.files)
     active.value = !active.value;
-    overlay.value = new Array()
+    overlay.value = []
 
     if (dropzoneFile.value) {
       for (let i in dropzoneFile.value) {
@@ -75,7 +75,7 @@ const toggleActive = (e) => {
 const selectedFile = () => {
   if (props.multiple) {
     dropzoneFile.value = new Array(...dropzoneInput.value.files)
-    overlay.value = new Array()
+    overlay.value = []
 
     if (dropzoneFile.value) {
       for (let i in dropzoneFile.value) {
@@ -143,6 +143,26 @@ const imageUrlToBase64 = async (url) => {
 
 onMounted(() => {
   setTimeout(() => {
+    if (props.multiple) {
+      dropzoneFile.value = new Array([]);
+      overlay.value = []
+
+      props.addImages.forEach((value, key) => {
+        imageUrlToBase64(value.path)
+            .then((response) => {
+              if (!response) {
+                return;
+              }
+              const file = new File([response], 'foto')
+              dropzoneFile.value.push(file);
+              setTimeout(() => {
+                dropzoneImg.value[key].style.backgroundImage = `url(${value.path})`;
+                emit('update:modelValue', file)
+              }, 500)
+            })
+      })
+      return;
+    }
     imageUrlToBase64(props.addImages)
         .then((response) => {
           if (!response) {
