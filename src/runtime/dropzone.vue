@@ -2,6 +2,10 @@
 import {ref, onMounted} from 'vue'
 
 const props = defineProps({
+  id:{
+    type: String,
+    default: true,
+  },
   modelValue: {
     type: [String, Boolean, Array, File],
     default: false,
@@ -30,8 +34,9 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'change'])
 
-const ID = ref(`dropzoneID_`)
-let dropzoneFile = {[ID.value]: ref()}[ID.value]
+// {[props.id]: ref()}[props.id]
+
+let dropzoneFile = ref()
 const dropzoneRef = ref()
 const dropzoneImg = ref()
 
@@ -197,7 +202,7 @@ onMounted(() => {
     <template>
       <div v-if="!dropzoneFile" class="dropzone_content">
         <slot name="default"></slot>
-        <label :for="ID">{{ label }}</label>
+        <label :for="id">{{ label }}</label>
       </div>
       <div
           v-else-if="!props.multiple"
@@ -241,7 +246,7 @@ onMounted(() => {
       </div>
       <input
           type="file"
-          :id="ID"
+          :id="id"
           ref="dropzoneRef"
           class="dropzoneFile"
           @change="selectedFile"

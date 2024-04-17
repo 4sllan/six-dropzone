@@ -79,7 +79,7 @@ const modelValueFileMultiple = (e) => {
 <template>
   <div>
     <SixDropzone
-        ref="drop1"
+        id="drop"
         v-model="photoFile"
         @drop.prevent="drop"
         @change="selectedFile"
@@ -88,6 +88,7 @@ const modelValueFileMultiple = (e) => {
     >
     </SixDropzone>
     <SixDropzone
+        id="dropMultiple"
         v-model="photoFileMultiple"
         @drop.prevent="dropMultiple"
         @change="selectedFileMultiple"
