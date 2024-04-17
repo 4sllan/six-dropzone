@@ -34,27 +34,21 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:modelValue', 'change'])
-
-// {[props.id]: ref()}[props.id]
+const emit = defineEmits(['update:modelValue'])
 
 let dropzoneFile = ref()
-const dropzoneRef = ref()
 const dropzoneImg = ref()
-
+const dropzoneRef= ref()
 const overlay = ref(false)
 const active = ref(false)
 
 const toggleActive = (e) => {
   if (props.multiple) {
     dropzoneFile.value = new Array(...e.dataTransfer.files)
-
     active.value = !active.value;
     overlay.value = []
 
-
     if (dropzoneFile.value) {
-
       for (let i in dropzoneFile.value) {
         let reader = new FileReader();
 
@@ -67,13 +61,12 @@ const toggleActive = (e) => {
     } else {
       dropzoneImg.value.style.backgroundImage = "url('')";
     }
+    emit('change', dropzoneFile.value)
+    emit('update:modelValue', dropzoneFile.value)
     return
   }
 
   dropzoneFile.value = e.dataTransfer.files[0];
-  emit('change', dropzoneFile.value)
-  emit('update:modelValue', dropzoneFile.value)
-
   active.value = !active.value;
 
   let reader = new FileReader();
@@ -87,14 +80,14 @@ const toggleActive = (e) => {
   } else {
     dropzoneImg.value.style.backgroundImage = "url('')";
   }
+
+  emit('change', dropzoneFile.value)
+  emit('update:modelValue', dropzoneFile.value)
 };
+
 const selectedFile = () => {
   if (props.multiple) {
-
     dropzoneFile.value = new Array(...dropzoneRef.value.files)
-    emit('change', dropzoneFile.value)
-    emit('update:modelValue', dropzoneFile.value)
-
     overlay.value = []
 
     if (dropzoneFile.value) {
@@ -110,12 +103,13 @@ const selectedFile = () => {
     } else {
       dropzoneImg.value.style.backgroundImage = "url('')";
     }
+
+    emit('change', dropzoneFile.value)
+    emit('update:modelValue', dropzoneFile.value)
     return
   }
 
   dropzoneFile.value = dropzoneRef.value.files[0];
-  emit('change', dropzoneFile.value)
-  emit('update:modelValue', dropzoneFile.value)
 
   let reader = new FileReader();
 
@@ -128,13 +122,19 @@ const selectedFile = () => {
   } else {
     dropzoneImg.value.style.backgroundImage = "url('')";
   }
+
+  emit('change', dropzoneFile.value)
+  emit('update:modelValue', dropzoneFile.value)
 }
+
 const dropzoneClear = () => {
   dropzoneFile.value = ""
   emit('update:modelValue', "")
 }
+
 const dropzoneClearMultiple = (item, index) => {
-  dropzoneFile.value.splice(index, 1);
+  dropzoneFile.value.splice(index, 1)
+
   emit('update:modelValue', dropzoneFile.value)
 
   if (!dropzoneFile.value.length) {
@@ -142,7 +142,11 @@ const dropzoneClearMultiple = (item, index) => {
     dropzoneImg.value = null
   }
 }
+
 const imageUrlToBase64 = async (url) => {
+  if (!props.dropMounted) {
+    return;
+  }
   const data = await fetch(url, {mode: 'no-cors'});
   const blob = await data.blob();
   return new Promise((resolve, reject) => {
@@ -158,30 +162,31 @@ const imageUrlToBase64 = async (url) => {
 
 onMounted(() => {
   setTimeout(() => {
-    if (!props.dropMounted) {
-      return;
-    }
     if (props.multiple && Array.isArray(props.dropMounted)) {
       dropzoneFile.value = [];
-      overlay.value = [];
+      overlay.value = []
 
-      Promise.all(props.dropMounted).then(response => {
-        response.forEach((value, key) => {
-          imageUrlToBase64(value.path)
-              .then((response) => {
-                const file = new File([response], `photo_${key}`)
-                dropzoneFile.value.push(file);
-                setTimeout(() => {
-                  dropzoneImg.value[key].style.backgroundImage = `url(${value.path})`;
-                  emit('update:modelValue', dropzoneFile.value)
-                }, 500)
-              })
-        })
+      props.dropMounted.forEach((value, key) => {
+        imageUrlToBase64(value.path)
+            .then((response) => {
+              if (!response) {
+                return;
+              }
+              const file = new File([response], `photo_${key}`)
+              dropzoneFile.value.push(file);
+              setTimeout(() => {
+                dropzoneImg.value[key].style.backgroundImage = `url(${value.path})`;
+                emit('update:modelValue', dropzoneFile.value)
+              }, 500)
+            })
       })
       return;
     }
     imageUrlToBase64(props.dropMounted)
         .then((response) => {
+          if (!response) {
+            return;
+          }
           dropzoneFile.value = new File([response], 'photo');
           setTimeout(() => {
             dropzoneImg.value.style.backgroundImage = `url(${props.dropMounted})`;
@@ -201,65 +206,67 @@ onMounted(() => {
       :class="{ 'active-dropzone': active}"
       class="dropzone"
   >
-    <template>
-      <div v-if="!dropzoneFile" class="dropzone_content">
-        <slot name="default"></slot>
-        <label :for="id">{{ label }}</label>
-      </div>
-      <div
-          v-else-if="!props.multiple"
-          class="dropzoneImg"
-          ref="dropzoneImg"
-          id="dropzoneImg"
-          @mouseover="overlay = true"
-          @mouseleave="overlay = false"
-          :class="{'_overlay' : overlay}"
-      >
-        <div class="content" @click.prevent="dropzoneClear">
+    <div v-if="!dropzoneFile" class="dropzone_content">
+      <slot name="default"></slot>
+      <label :for="id">{{ label }}</label>
+    </div>
+    <div
+        v-else-if="!props.multiple"
+        class="dropzoneImg"
+        ref="dropzoneImg"
+        id="dropzoneImg"
+        @mouseover="overlay = true"
+        @mouseleave="overlay = false"
+        :class="{'_overlay' : overlay}"
+    >
+      <div class="content" @click.prevent="dropzoneClear">
+        <i>
           <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <circle cx="12" cy="12" r="10"/>
             <line x1="15" y1="9" x2="9" y2="15"/>
             <line x1="9" y1="9" x2="15" y2="15"/>
           </svg>
-        </div>
+        </i>
       </div>
-      <div
-          class="dropzoneImgMultiple"
-          v-else
-      >
-        <template v-for="(item, index) in dropzoneFile">
-          <div
-              class="dropzoneImg"
-              ref="dropzoneImg"
-              :id="item.name"
-              @mouseover="overlay[index] = true"
-              @mouseleave="overlay[index] = false"
-              :class="{'_overlay' : overlay[index]}"
-          >
-            <div class="content" @click.prevent="dropzoneClearMultiple(item, index)">
+    </div>
+    <div
+        class="dropzoneImgMultiple"
+        v-else
+    >
+      <template v-for="(item, index) in dropzoneFile">
+        <div
+            class="dropzoneImg"
+            ref=dropzoneImg
+            :id="`dropzoneImg${index}`"
+            @mouseover="overlay[index] = true"
+            @mouseleave="overlay[index] = false"
+            :class="{'_overlay' : overlay[index]}"
+        >
+          <div class="content" @click.prevent="dropzoneClearMultiple(item, index)">
+            <i>
               <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12" cy="12" r="10"/>
                 <line x1="15" y1="9" x2="9" y2="15"/>
                 <line x1="9" y1="9" x2="15" y2="15"/>
               </svg>
-            </div>
+            </i>
           </div>
-        </template>
-      </div>
-      <input
-          type="file"
-          :id="id"
-          ref="dropzoneRef"
-          class="dropzoneFile"
-          @change="selectedFile"
-          :multiple="multiple"
-      />
-      <div class="input__details" v-if="props.errorMessages">
-        <div class="messages" role="alert" aria-live="polite">
-          <div class="messages__message">{{ props.errorMessages }}</div>
         </div>
+      </template>
+    </div>
+    <input
+        type="file"
+        :id="id"
+        class="dropzoneFile"
+        @change="selectedFile"
+        :multiple="multiple"
+        ref="dropzoneRef"
+    />
+    <div class="input__details" v-if="props.errorMessages">
+      <div class="messages" role="alert" aria-live="polite">
+        <div class="messages__message">{{ props.errorMessages }}</div>
       </div>
-    </template>
+    </div>
   </div>
 </template>
 
@@ -297,8 +304,6 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     row-gap: 16px;
-    width: 100%;
-    height: inherit;
   }
 }
 

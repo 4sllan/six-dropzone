@@ -1,5 +1,5 @@
 <script setup>
-import SixDropzone from '../../src/runtime/dropzone.vue'
+import SixDropzone from '../../src/runtime/doistres.vue'
 
 const photoFile = ref()
 const url = ref('http://localhost/storage/projeto/28/1x4mtlbeTM.png')
