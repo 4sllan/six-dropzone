@@ -72,12 +72,22 @@ yarn add six-dropzone
 <script setup>
     const photo = ref()
     const drop = (e) => {
-        photo.value.foto = e.dataTransfer.files[0];
+      console.log(e.dataTransfer.files[0], 'drop')
+    }
+    const selectedFile = (e) => {
+      console.log(e, 'change')
     };
+    const modelValue = (e) => {
+      console.log(e, 'model-value')
+    }
 </script>
 <template>
     <SixDropzone
+            v-model="photo"
             @drop.prevent="drop"
+            @change="selectedFile"
+            @update:model-value="modelValue"
+            :drop-mounted="url"
     ></SixDropzone>
 </template>
 ```
@@ -88,16 +98,17 @@ yarn add six-dropzone
 
 | Name             | Type              | Default Value | Description                                                                                                                                                                              |
 |------------------|-------------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `addImages`      | `String`          | `undefined`   | The image URL.                                                                                                                                                                           |
+| `dropMounted`    | `String`          | `undefined`   | The image URL.                                                                                                                                                                           |
 | `label`          | `String`          | `Select File` | Sets the button text                                                                                                                                                                     |
 | `error-messages` | `String/String[]` | `[]`          | Puts the input in an error state and passes through custom error messages. Will be combined with any validations that occur from the rules prop. This field will not trigger validation. |
 
 ### Events
 
-| Name                | Type     | Description                                               | 
-|---------------------|----------|-----------------------------------------------------------|
-| `drop`              | `[File]` | drop value of the component.                              |
-| `update:modelValue` | `[File]` | Event that is emitted when the component’s model changes. |
+| Name                | Type      | Description                                               | 
+|---------------------|-----------|-----------------------------------------------------------|
+| `drop`              | `[File]`  | drop value of the component.                              |
+| `change`            | `[File]`  | value of the component.                                   |
+| `update:modelValue` | `[File]`  | Event that is emitted when the component’s model changes. |
 
 ### Slots
 

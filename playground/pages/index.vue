@@ -1,8 +1,12 @@
 <script setup>
 import SixDropzone from '../../src/runtime/dropzone.vue'
 
-const photo = ref()
-const response = ref([
+const photoFile = ref()
+const url = ref('http://localhost/storage/projeto/28/1x4mtlbeTM.png')
+
+
+const photoFileMultiple = ref()
+const urlsMultiple = ref([
   {
     "id": 22,
     "projeto_id": 28,
@@ -49,15 +53,47 @@ const response = ref([
 
 
 const drop = (e) => {
-  photo.value = e.dataTransfer.files;
+  console.log(e.dataTransfer.files[0], 'drop')
+}
+const selectedFile = (e) => {
+  console.log(e, 'change')
 };
+const modelValueFile = (e) => {
+  console.log(e, 'model-value')
+}
+
+
+// MULTIPLE
+
+const dropMultiple = (e) => {
+  console.log(e.dataTransfer.files[0], 'drop')
+}
+const selectedFileMultiple = (e) => {
+  console.log(e, 'change')
+};
+const modelValueFileMultiple = (e) => {
+  console.log(e, 'model-value')
+}
 </script>
 
 <template>
-  <SixDropzone
-      @drop.prevent="drop"
-      :add-images="response"
-      :multiple="true"
-  >
-  </SixDropzone>
+  <div>
+    <SixDropzone
+        v-model="photoFile"
+        @drop.prevent="drop"
+        @change="selectedFile"
+        @update:model-value="modelValueFile"
+        :drop-mounted="url"
+    >
+    </SixDropzone>
+    <SixDropzone
+        v-model="photoFileMultiple"
+        @drop.prevent="dropMultiple"
+        @change="selectedFileMultiple"
+        @update:model-value="modelValueFileMultiple"
+        :drop-mounted="urlsMultiple"
+        :multiple="true"
+    >
+    </SixDropzone>
+  </div>
 </template>
