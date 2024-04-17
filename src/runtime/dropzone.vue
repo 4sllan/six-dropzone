@@ -36,7 +36,7 @@ const emit = defineEmits(['update:modelValue', 'change'])
 const ID = ref(uniqueId('dropzoneID_'))
 let dropzoneFile = {[ID.value]: ref()}[ID.value]
 const dropzoneRef = ref()
-const dropzoneImg = reactive()
+const dropzoneImg = ref()
 
 const overlay = ref(false)
 const active = ref(false)
@@ -131,12 +131,8 @@ const dropzoneClear = () => {
   emit('update:modelValue', "")
 }
 const dropzoneClearMultiple = (item, index) => {
-
-  delete dropzoneFile.value[index]
-
-  // dropzoneFile.value.splice(index, 1);
-  // emit('update:modelValue', dropzoneFile.value)
-
+  dropzoneFile.value.splice(index, 1);
+  emit('update:modelValue', dropzoneFile.value)
 
   if (!dropzoneFile.value.length) {
     dropzoneFile.value = null
@@ -237,7 +233,6 @@ onMounted(() => {
               @mouseleave="overlay[index] = false"
               :class="{'_overlay' : overlay[index]}"
           >
-            <span style="color:white">{{ index }} {{ item.name }}</span>
             <div class="content" @click.prevent="dropzoneClearMultiple(item, index)">
               <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12" cy="12" r="10"/>
