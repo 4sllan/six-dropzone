@@ -4,11 +4,13 @@ import {ref, onMounted} from 'vue'
 const props = defineProps({
   id:{
     type: String,
-    default: true,
+    default: 'sixDrop',
+    required: true
   },
   modelValue: {
     type: [String, Boolean, Array, File],
-    default: false,
+    default: "",
+    required: false
   },
   dropMounted: {
     type: [String, Array],
