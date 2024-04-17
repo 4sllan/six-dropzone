@@ -53,32 +53,33 @@ const urlsMultiple = ref([
 
 
 const drop = (e) => {
-  console.log(e.dataTransfer.files[0], 'drop')
+  // console.log(e.dataTransfer.files[0], 'drop')
 }
 const selectedFile = (e) => {
-  console.log(e, 'change')
+  // console.log(e, 'change')
 };
 const modelValueFile = (e) => {
-  console.log(e, 'model-value')
+  // console.log(e, 'model-value')
 }
 
 
 // MULTIPLE
 
 const dropMultiple = (e) => {
-  console.log(e.dataTransfer.files[0], 'drop')
+  // console.log(e.dataTransfer.files[0], 'drop')
 }
 const selectedFileMultiple = (e) => {
-  console.log(e, 'change')
+  // console.log(e, 'change')
 };
 const modelValueFileMultiple = (e) => {
-  console.log(e, 'model-value')
+  // console.log(e, 'model-value')
 }
 </script>
 
 <template>
   <div>
     <SixDropzone
+        ref="drop1"
         v-model="photoFile"
         @drop.prevent="drop"
         @change="selectedFile"

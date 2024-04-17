@@ -1,9 +1,6 @@
 <script setup>
 import {ref, onMounted} from 'vue'
 
-import uniqueId from 'lodash.uniqueid'
-import clonedeep from 'lodash.clonedeep'
-
 const props = defineProps({
   modelValue: {
     type: [String, Boolean, Array, File],
@@ -33,14 +30,13 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'change'])
 
-const ID = ref(uniqueId('dropzoneID_'))
+const ID = ref(`dropzoneID_`)
 let dropzoneFile = {[ID.value]: ref()}[ID.value]
 const dropzoneRef = ref()
 const dropzoneImg = ref()
 
 const overlay = ref(false)
 const active = ref(false)
-
 
 const toggleActive = (e) => {
   if (props.multiple) {
