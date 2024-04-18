@@ -45,11 +45,7 @@
 > six-dropzone for Nuxt3 applications.
 
 ```sh
-npm i six-dropzone
-```
-
-```sh
-yarn add six-dropzone
+npx nuxi@latest module add six-dropzone
 ```
 
 ### Config

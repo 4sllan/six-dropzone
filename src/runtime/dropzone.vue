@@ -1,8 +1,10 @@
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, getCurrentInstance} from 'vue'
+
+const instance = getCurrentInstance();
 
 const props = defineProps({
-  id:{
+  id: {
     type: String,
     default: 'sixDrop',
     required: true
@@ -34,14 +36,19 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'change'])
 
 let dropzoneFile = ref()
 const dropzoneImg = ref()
-const dropzoneRef= ref()
+const dropzoneRef = ref()
 const overlay = ref(false)
 const active = ref(false)
 
+/**
+ * toggleActive
+ * @param e
+ * todo verificado
+ */
 const toggleActive = (e) => {
   if (props.multiple) {
     dropzoneFile.value = new Array(...e.dataTransfer.files)
@@ -58,11 +65,10 @@ const toggleActive = (e) => {
           dropzoneImg.value[i].style.backgroundImage = `url(${reader.result})`;
         }
       }
-    } else {
-      dropzoneImg.value.style.backgroundImage = "url('')";
+
+      emit('change', dropzoneFile.value)
+      emit('update:modelValue', dropzoneFile.value)
     }
-    emit('change', dropzoneFile.value)
-    emit('update:modelValue', dropzoneFile.value)
     return
   }
 
@@ -77,14 +83,13 @@ const toggleActive = (e) => {
 
   if (dropzoneFile.value) {
     reader.readAsDataURL(dropzoneFile.value);
-  } else {
-    dropzoneImg.value.style.backgroundImage = "url('')";
+    emit('change', dropzoneFile.value)
+    emit('update:modelValue', dropzoneFile.value)
   }
-
-  emit('change', dropzoneFile.value)
-  emit('update:modelValue', dropzoneFile.value)
 };
-
+/**
+ * selectedFile
+ */
 const selectedFile = () => {
   if (props.multiple) {
     dropzoneFile.value = new Array(...dropzoneRef.value.files)
@@ -126,12 +131,10 @@ const selectedFile = () => {
   emit('change', dropzoneFile.value)
   emit('update:modelValue', dropzoneFile.value)
 }
-
 const dropzoneClear = () => {
   dropzoneFile.value = ""
   emit('update:modelValue', "")
 }
-
 const dropzoneClearMultiple = (item, index) => {
   dropzoneFile.value.splice(index, 1)
 
@@ -160,6 +163,10 @@ const imageUrlToBase64 = async (url) => {
   });
 };
 
+const gridMultiple = (evt) => {
+  //console.log(evt)
+}
+
 onMounted(() => {
   setTimeout(() => {
     if (props.multiple && Array.isArray(props.dropMounted)) {
@@ -168,29 +175,32 @@ onMounted(() => {
 
       props.dropMounted.forEach((value, key) => {
         imageUrlToBase64(value.path)
-            .then((response) => {
+            .then(response => {
               if (!response) {
                 return;
               }
-              const file = new File([response], `photo_${key}`)
-              dropzoneFile.value.push(file);
+              dropzoneFile.value.push(new File([response], `photo_${key}`));
+            })
+            .then(res => {
               setTimeout(() => {
                 dropzoneImg.value[key].style.backgroundImage = `url(${value.path})`;
-                emit('update:modelValue', dropzoneFile.value)
               }, 500)
             })
       })
+      // emit('update:modelValue', dropzoneFile.value)
       return;
     }
     imageUrlToBase64(props.dropMounted)
-        .then((response) => {
+        .then(response => {
           if (!response) {
             return;
           }
           dropzoneFile.value = new File([response], 'photo');
+        })
+        .then(res => {
           setTimeout(() => {
             dropzoneImg.value.style.backgroundImage = `url(${props.dropMounted})`;
-            emit('update:modelValue', dropzoneFile.value)
+            //emit('update:modelValue', dropzoneFile.value)
           }, 500)
         })
   }, 500)
@@ -214,25 +224,19 @@ onMounted(() => {
         v-else-if="!props.multiple"
         class="dropzoneImg"
         ref="dropzoneImg"
-        id="dropzoneImg"
         @mouseover="overlay = true"
         @mouseleave="overlay = false"
         :class="{'_overlay' : overlay}"
     >
       <div class="content" @click.prevent="dropzoneClear">
-        <i>
-          <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="15" y1="9" x2="9" y2="15"/>
-            <line x1="9" y1="9" x2="15" y2="15"/>
-          </svg>
-        </i>
+        <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="15" y1="9" x2="9" y2="15"/>
+          <line x1="9" y1="9" x2="15" y2="15"/>
+        </svg>
       </div>
     </div>
-    <div
-        class="dropzoneImgMultiple"
-        v-else
-    >
+    <div class="dropzoneImgMultiple" v-else @vue:mounted="gridMultiple">
       <template v-for="(item, index) in dropzoneFile">
         <div
             class="dropzoneImg"
@@ -243,13 +247,11 @@ onMounted(() => {
             :class="{'_overlay' : overlay[index]}"
         >
           <div class="content" @click.prevent="dropzoneClearMultiple(item, index)">
-            <i>
-              <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="15" y1="9" x2="9" y2="15"/>
-                <line x1="9" y1="9" x2="15" y2="15"/>
-              </svg>
-            </i>
+            <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="15" y1="9" x2="9" y2="15"/>
+              <line x1="9" y1="9" x2="15" y2="15"/>
+            </svg>
           </div>
         </div>
       </template>

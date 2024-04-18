@@ -1,5 +1,5 @@
 <script setup>
-import SixDropzone from '../../src/runtime/doistres.vue'
+import SixDropzone from '../../src/runtime/dropzone.vue'
 
 const photoFile = ref()
 const url = ref('http://localhost/storage/projeto/28/1x4mtlbeTM.png')
@@ -94,7 +94,7 @@ const modelValueFileMultiple = (e) => {
         @change="selectedFileMultiple"
         @update:model-value="modelValueFileMultiple"
         :drop-mounted="urlsMultiple"
-        :multiple="true"
+        multiple
     >
     </SixDropzone>
   </div>
