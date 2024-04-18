@@ -163,8 +163,8 @@ const imageUrlToBase64 = async (url) => {
   });
 };
 
-const gridMultiple = (evt) => {
-  //console.log(evt)
+const gridMultiple = (elt) => {
+  //console.log(elt.el)
 }
 
 onMounted(() => {
@@ -196,8 +196,6 @@ onMounted(() => {
             return;
           }
           dropzoneFile.value = new File([response], 'photo');
-        })
-        .then(res => {
           setTimeout(() => {
             dropzoneImg.value.style.backgroundImage = `url(${props.dropMounted})`;
             //emit('update:modelValue', dropzoneFile.value)
@@ -236,9 +234,10 @@ onMounted(() => {
         </svg>
       </div>
     </div>
-    <div class="dropzoneImgMultiple" v-else @vue:mounted="gridMultiple">
+    <div class="dropzoneImgMultiple" v-else >
       <template v-for="(item, index) in dropzoneFile">
         <div
+            @vue:mounted="gridMultiple"
             class="dropzoneImg"
             ref=dropzoneImg
             :id="`dropzoneImg${index}`"
