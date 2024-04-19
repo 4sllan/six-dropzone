@@ -36,7 +36,7 @@
 
 ## Demo
 
-[![view six-dropzone](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/)
+[![view six-dropzone](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/six-dropzone-forked-mtmwt7)
 
 ## Setup
 
