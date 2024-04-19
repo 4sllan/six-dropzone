@@ -53,38 +53,15 @@ const toggleActive = (e) => {
     dropzoneFile.value = new Array(...e.dataTransfer.files)
     active.value = !active.value;
     overlay.value = []
-
-    if (dropzoneFile.value) {
-      for (let i in dropzoneFile.value) {
-        let reader = new FileReader();
-
-        reader.readAsDataURL(dropzoneFile.value[i]);
-
-        reader.onloadend = function () {
-          dropzoneImg.value[i].style.backgroundImage = `url(${reader.result})`;
-        }
-      }
-
-      emit('change', dropzoneFile.value)
-      emit('update:modelValue', dropzoneFile.value)
-    }
+    emit('change', dropzoneFile.value)
+    emit('update:modelValue', dropzoneFile.value)
     return
   }
 
   dropzoneFile.value = e.dataTransfer.files[0];
   active.value = !active.value;
-
-  let reader = new FileReader();
-
-  reader.onloadend = function () {
-    dropzoneImg.value.style.backgroundImage = `url(${reader.result})`;
-  }
-
-  if (dropzoneFile.value) {
-    reader.readAsDataURL(dropzoneFile.value);
-    emit('change', dropzoneFile.value)
-    emit('update:modelValue', dropzoneFile.value)
-  }
+  emit('change', dropzoneFile.value)
+  emit('update:modelValue', dropzoneFile.value)
 };
 /**
  * selectedFile
@@ -93,40 +70,12 @@ const selectedFile = () => {
   if (props.multiple) {
     dropzoneFile.value = new Array(...dropzoneRef.value.files)
     overlay.value = []
-
-    if (dropzoneFile.value) {
-      for (let i in dropzoneFile.value) {
-        let reader = new FileReader();
-
-        reader.readAsDataURL(dropzoneFile.value[i]);
-
-        reader.onloadend = function () {
-          dropzoneImg.value[i].style.backgroundImage = `url(${reader.result})`;
-        }
-      }
-    } else {
-      dropzoneImg.value.style.backgroundImage = "url('')";
-    }
-
     emit('change', dropzoneFile.value)
     emit('update:modelValue', dropzoneFile.value)
     return
   }
 
   dropzoneFile.value = dropzoneRef.value.files[0];
-
-  let reader = new FileReader();
-
-  reader.onloadend = function () {
-    dropzoneImg.value.style.backgroundImage = `url(${reader.result})`;
-  }
-
-  if (dropzoneFile.value) {
-    reader.readAsDataURL(dropzoneFile.value);
-  } else {
-    dropzoneImg.value.style.backgroundImage = "url('')";
-  }
-
   emit('change', dropzoneFile.value)
   emit('update:modelValue', dropzoneFile.value)
 }
@@ -137,27 +86,20 @@ const dropzoneClear = () => {
   dropzoneFile.value = ""
   emit('update:modelValue', "")
 }
-/**
- * dropzoneClearMultiple
- * @param item
- * @param index
- */
-const dropzoneClearMultiple = (item, index) => {
-  // const files = dropzoneFile.value.map(arr => {
-  //   if (arr.name !== item.name) {
-  //     return arr;
-  //   }
-  // })
-  // dropzoneFile.value = ""
-  // files.splice(files.indexOf(undefined), 1)
-  // dropzoneFile.value = files
 
-  //emit('update:modelValue', dropzoneFile.value)
-
-  // if (!dropzoneFile.value.length) {
-  //   dropzoneFile.value = null
-  //   dropzoneImg.value = null
-  // }
+const dropzoneClearMultiple = (item, index, ref) => {
+  dropzoneFile.value.splice(index, 1)
+  setTimeout(() => {
+    let i = 0;
+    ref.map(elt => {
+      backgroundImage(dropzoneFile.value[i], {el: elt})
+      i++
+    })
+    emit('update:modelValue', dropzoneFile.value)
+  }, 5)
+  if (!dropzoneFile.value.length) {
+    dropzoneFile.value = null
+  }
 }
 /**
  * imageUrlToBase64
@@ -181,7 +123,12 @@ const imageUrlToBase64 = async (url) => {
     reader.onerror = reject;
   });
 };
-
+/**
+ * backgroundImage
+ * @param file
+ * @param evt
+ * @returns {Promise<void>}
+ */
 const backgroundImage = async (file, evt) => {
   const reader = new FileReader();
   reader.onloadend = () => {
@@ -190,7 +137,12 @@ const backgroundImage = async (file, evt) => {
   };
   reader.readAsDataURL(file);
 }
-
+/**
+ * dataURLtoFile
+ * @param dataurl
+ * @param filename
+ * @returns {module:buffer.File | File}
+ */
 const dataURLtoFile = (dataurl, filename) => {
   let arr = dataurl.split(','),
       mime = arr[0].match(/:(.*?);/)[1],
@@ -218,11 +170,13 @@ onMounted(() => {
               console.error(err)
             })
       })
+      emit('update:modelValue', dropzoneFile.value)
       return;
     }
     imageUrlToBase64(props.dropMounted)
         .then(response => {
           dropzoneFile.value = (dataURLtoFile(response, `photo`));
+          emit('update:modelValue', dropzoneFile.value)
         })
         .catch(err => {
           console.error(err)
@@ -248,7 +202,6 @@ onMounted(() => {
         v-else-if="!props.multiple"
         @vue:mounted="(event) => {backgroundImage(dropzoneFile, event)}"
         class="dropzoneImg"
-        ref="dropzoneImg"
         @mouseover="overlay = true"
         @mouseleave="overlay = false"
         :class="{'_overlay' : overlay}"
@@ -266,13 +219,12 @@ onMounted(() => {
         <div
             @vue:mounted="(event) => {backgroundImage(item, event)}"
             class="dropzoneImg"
-            ref=dropzoneImg
-            :id="`dropzoneImg${index}`"
+            ref="dropzoneImg"
             @mouseover="overlay[index] = true"
             @mouseleave="overlay[index] = false"
             :class="{'_overlay' : overlay[index]}"
         >
-          <div class="content" @click.prevent="dropzoneClearMultiple(item, index)">
+          <div class="content" @click.prevent="dropzoneClearMultiple(item, index, dropzoneImg)">
             <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <circle cx="12" cy="12" r="10"/>
               <line x1="15" y1="9" x2="9" y2="15"/>
