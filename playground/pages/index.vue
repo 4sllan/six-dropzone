@@ -2,25 +2,25 @@
 import SixDropzone from '../../src/runtime/dropzone.vue'
 
 const photoFile = ref()
-const url = ref('https://ciclovivo.com.br/wp-content/uploads/2018/10/iStock-536613027-1024x683.jpg')
+const url = ref('https://i.imgur.com/PcRn7hB.jpeg')
 
 
 const photoFileMultiple = ref()
 const urlsMultiple = ref([
   {
-    path: "https://ciclovivo.com.br/wp-content/uploads/2018/10/iStock-536613027-1024x683.jpg"
+    path: "https://i.imgur.com/PcRn7hB.jpeg"
   },
   {
-    path: "https://img.freepik.com/fotos-gratis/respingo-colorido-abstrato-3d-background-generativo-ai-background_60438-2509.jpg",
+    path: "https://i.imgur.com/HkulqHb.jpeg",
   },
   {
-    path: "https://img.freepik.com/fotos-gratis/uma-pintura-de-um-lago-de-montanha-com-uma-montanha-ao-fundo_188544-9126.jpg",
+    path: "https://i.imgur.com/cJNCe4F.jpeg",
   },
   {
-    path: "https://t.ctcdn.com.br/JlHwiRHyv0mTD7GfRkIlgO6eQX8=/640x360/smart/i257652.jpeg",
+    path: "https://i.imgur.com/osJyAlk.jpeg",
   },
   {
-    path: "https://services.meteored.com/img/article/inteligencia-artificial-aprende-a-reconstruir-imagens-vistas-por-pessoas-ciencia-fotos-1679175318563_1280.jpg",
+    path: "https://i.imgur.com/AVU0Q0z.jpeg",
   },
 ])
 

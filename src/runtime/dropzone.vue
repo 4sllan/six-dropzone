@@ -143,14 +143,21 @@ const dropzoneClear = () => {
  * @param index
  */
 const dropzoneClearMultiple = (item, index) => {
-  dropzoneFile.value.splice(index, 1)
+  // const files = dropzoneFile.value.map(arr => {
+  //   if (arr.name !== item.name) {
+  //     return arr;
+  //   }
+  // })
+  // dropzoneFile.value = ""
+  // files.splice(files.indexOf(undefined), 1)
+  // dropzoneFile.value = files
 
-  emit('update:modelValue', dropzoneFile.value)
+  //emit('update:modelValue', dropzoneFile.value)
 
-  if (!dropzoneFile.value.length) {
-    dropzoneFile.value = null
-    dropzoneImg.value = null
-  }
+  // if (!dropzoneFile.value.length) {
+  //   dropzoneFile.value = null
+  //   dropzoneImg.value = null
+  // }
 }
 /**
  * imageUrlToBase64
@@ -161,7 +168,8 @@ const imageUrlToBase64 = async (url) => {
   if (!props.dropMounted) {
     return;
   }
-  const data = await fetch(url, {mode: 'no-cors'});
+  // {mode: 'no-cors'}
+  const data = await fetch(url);
   const blob = await data.blob();
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -174,6 +182,27 @@ const imageUrlToBase64 = async (url) => {
   });
 };
 
+const backgroundImage = async (file, evt) => {
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    const base64data = reader.result;
+    evt.el.style.backgroundImage = `url(${base64data})`
+  };
+  reader.readAsDataURL(file);
+}
+
+const dataURLtoFile = (dataurl, filename) => {
+  let arr = dataurl.split(','),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[arr.length - 1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, {type: mime});
+}
+
 onMounted(() => {
   setTimeout(() => {
     if (props.multiple && Array.isArray(props.dropMounted)) {
@@ -183,37 +212,20 @@ onMounted(() => {
       props.dropMounted.forEach((value, key) => {
         imageUrlToBase64(value.path)
             .then(response => {
-              if (!response) {
-                return;
-              }
-              dropzoneFile.value.push(new File([response], `photo_${key}`));
+              dropzoneFile.value.push(dataURLtoFile(response, `photo_${key}`));
             })
-            .then(res => {
-              if (!dropzoneImg.value) {
-                return
-              }
-              setTimeout(() => {
-                dropzoneImg.value[key].style.backgroundImage = `url(${value.path})`;
-              }, 500)
+            .catch(err => {
+              console.error(err)
             })
       })
       return;
     }
     imageUrlToBase64(props.dropMounted)
         .then(response => {
-          if (!response) {
-            return;
-          }
-          dropzoneFile.value = new File([response], 'photo');
+          dropzoneFile.value = (dataURLtoFile(response, `photo`));
         })
-        .then(res => {
-          if (!dropzoneImg.value) {
-            return
-          }
-          setTimeout(() => {
-            dropzoneImg.value.style.backgroundImage = `url(${props.dropMounted})`;
-            //emit('update:modelValue', dropzoneFile.value)
-          }, 500)
+        .catch(err => {
+          console.error(err)
         })
   }, 500)
 })
@@ -234,6 +246,7 @@ onMounted(() => {
     </div>
     <div
         v-else-if="!props.multiple"
+        @vue:mounted="(event) => {backgroundImage(dropzoneFile, event)}"
         class="dropzoneImg"
         ref="dropzoneImg"
         @mouseover="overlay = true"
@@ -251,6 +264,7 @@ onMounted(() => {
     <div class="dropzoneImgMultiple" v-else>
       <template v-for="(item, index) in dropzoneFile">
         <div
+            @vue:mounted="(event) => {backgroundImage(item, event)}"
             class="dropzoneImg"
             ref=dropzoneImg
             :id="`dropzoneImg${index}`"
