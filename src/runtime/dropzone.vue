@@ -47,7 +47,6 @@ const active = ref(false)
 /**
  * toggleActive
  * @param e
- * todo verificado
  */
 const toggleActive = (e) => {
   if (props.multiple) {
@@ -131,10 +130,18 @@ const selectedFile = () => {
   emit('change', dropzoneFile.value)
   emit('update:modelValue', dropzoneFile.value)
 }
+/**
+ * dropzoneClear
+ */
 const dropzoneClear = () => {
   dropzoneFile.value = ""
   emit('update:modelValue', "")
 }
+/**
+ * dropzoneClearMultiple
+ * @param item
+ * @param index
+ */
 const dropzoneClearMultiple = (item, index) => {
   dropzoneFile.value.splice(index, 1)
 
@@ -145,7 +152,11 @@ const dropzoneClearMultiple = (item, index) => {
     dropzoneImg.value = null
   }
 }
-
+/**
+ * imageUrlToBase64
+ * @param url
+ * @returns {Promise<unknown>}
+ */
 const imageUrlToBase64 = async (url) => {
   if (!props.dropMounted) {
     return;
@@ -163,10 +174,6 @@ const imageUrlToBase64 = async (url) => {
   });
 };
 
-const gridMultiple = (elt) => {
-  //console.log(elt.el)
-}
-
 onMounted(() => {
   setTimeout(() => {
     if (props.multiple && Array.isArray(props.dropMounted)) {
@@ -182,12 +189,14 @@ onMounted(() => {
               dropzoneFile.value.push(new File([response], `photo_${key}`));
             })
             .then(res => {
+              if (!dropzoneImg.value) {
+                return
+              }
               setTimeout(() => {
                 dropzoneImg.value[key].style.backgroundImage = `url(${value.path})`;
               }, 500)
             })
       })
-      // emit('update:modelValue', dropzoneFile.value)
       return;
     }
     imageUrlToBase64(props.dropMounted)
@@ -196,6 +205,11 @@ onMounted(() => {
             return;
           }
           dropzoneFile.value = new File([response], 'photo');
+        })
+        .then(res => {
+          if (!dropzoneImg.value) {
+            return
+          }
           setTimeout(() => {
             dropzoneImg.value.style.backgroundImage = `url(${props.dropMounted})`;
             //emit('update:modelValue', dropzoneFile.value)
@@ -234,10 +248,9 @@ onMounted(() => {
         </svg>
       </div>
     </div>
-    <div class="dropzoneImgMultiple" v-else >
+    <div class="dropzoneImgMultiple" v-else>
       <template v-for="(item, index) in dropzoneFile">
         <div
-            @vue:mounted="gridMultiple"
             class="dropzoneImg"
             ref=dropzoneImg
             :id="`dropzoneImg${index}`"
