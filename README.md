@@ -14,7 +14,7 @@
 [![Nuxt][nuxt-src]][nuxt-href]
 [![Static Badge](https://img.shields.io/badge/-%E2%99%A5%20Sponsors-ec5cc6?style=flat-square)](https://github.com/sponsors/4sllan)
 
-[Demo online](https://codesandbox.io/s/)
+[Demo online](https://codesandbox.io/p/sandbox/six-dropzone-forked-mtmwt7)
 
 
 ---
