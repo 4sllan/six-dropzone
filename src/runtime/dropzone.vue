@@ -338,6 +338,7 @@ onMounted(() => {
 
 ._overlay::before {
   content: "";
+  top: 0;
   left: 0;
   position: absolute;
   background-color: #000;
