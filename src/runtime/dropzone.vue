@@ -161,16 +161,24 @@ onMounted(() => {
       dropzoneFile.value = [];
       overlay.value = []
 
-      props.dropMounted.forEach((value, key) => {
-        imageUrlToBase64(value.path)
-            .then(response => {
-              dropzoneFile.value.push(dataURLtoFile(response, `photo_${key}`));
-            })
-            .catch(err => {
-              console.error(err)
-            })
+      const promise = new Promise((resolve, reject) => {
+        props.dropMounted.forEach((value, key) => {
+          imageUrlToBase64(value.path)
+              .then(response => {
+                dropzoneFile.value.push(dataURLtoFile(response, `photo_${key}`));
+                resolve()
+              })
+              .catch(err => {
+                reject(err)
+              })
+        })
       })
-      emit('update:modelValue', dropzoneFile.value)
+
+      promise.then(() => {
+        emit('update:modelValue', dropzoneFile.value)
+      }).catch(err => {
+        console.error(err)
+      })
       return;
     }
     imageUrlToBase64(props.dropMounted)
