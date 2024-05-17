@@ -10,7 +10,6 @@ const props = defineProps({
     required: true
   },
   modelValue: {
-    type: [String, Boolean, Array, File],
     default: "",
     required: false
   },
@@ -181,14 +180,16 @@ onMounted(() => {
       })
       return;
     }
-    imageUrlToBase64(props.dropMounted)
-        .then(response => {
-          dropzoneFile.value = (dataURLtoFile(response, `photo`));
-          emit('update:modelValue', dropzoneFile.value)
-        })
-        .catch(err => {
-          console.error(err)
-        })
+    if(props.dropMounted){
+      imageUrlToBase64(props.dropMounted)
+          .then(response => {
+            dropzoneFile.value = (dataURLtoFile(response, `photo`));
+            emit('update:modelValue', dropzoneFile.value)
+          })
+          .catch(err => {
+            console.error(err)
+          })
+    }
   }, 500)
 })
 </script>
