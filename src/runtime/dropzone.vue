@@ -1,8 +1,6 @@
 <script setup>
 import {ref, onMounted, getCurrentInstance} from 'vue'
 
-const instance = getCurrentInstance();
-
 const props = defineProps({
   id: {
     type: String,
@@ -180,7 +178,7 @@ onMounted(() => {
       })
       return;
     }
-    if(props.dropMounted){
+    if (props.dropMounted) {
       imageUrlToBase64(props.dropMounted)
           .then(response => {
             dropzoneFile.value = (dataURLtoFile(response, `photo`));
