@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {ref, onMounted} from 'vue';
-import type { PropType } from 'vue';
+import type {PropType} from 'vue';
 
 // Definição de propriedades do componente
 const props = defineProps({
@@ -16,9 +16,18 @@ const props = defineProps({
     type: [String, Array] as PropType<string | string[]>,
     default: ""
   },
-  label: {type: String, default: "Select File"},
-  multiple: {type: Boolean, default: false},
-  errorMessages: {type: String, default: ""}
+  label: {
+    type: String,
+    default: "Select File"
+  },
+  multiple: {
+    type: Boolean,
+    default: false
+  },
+  errorMessages: {
+    type: String,
+    default: ""
+  }
 });
 
 const emit = defineEmits<{
