@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import {ref, onMounted, PropType} from 'vue';
+import {ref, onMounted} from 'vue';
+import type { PropType } from 'vue';
 
 // Definição de propriedades do componente
 const props = defineProps({
@@ -20,7 +21,10 @@ const props = defineProps({
   errorMessages: {type: String, default: ""}
 });
 
-const emit = defineEmits<["update:modelValue", "change"]>();
+const emit = defineEmits<{
+  (event: "update:modelValue", value: string | File | File[] | null): void;
+  (event: "change", value: string | File | File[] | null): void;
+}>();
 
 // Estados do componente
 const dropzoneFile = ref<File | File[] | null>(null);
