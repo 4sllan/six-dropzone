@@ -1,6 +1,4 @@
 <script setup>
-import SixDropzone from '../../src/runtime/dropzone.vue'
-
 const photoFile = ref()
 const url = ref('https://i.imgur.com/PcRn7hB.jpeg')
 
