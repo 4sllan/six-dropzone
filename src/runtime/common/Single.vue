@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import {defineEmits, defineProps, ref, Comment, Text} from "vue";
-import type {PropType, Slot, VNode} from 'vue';
+import {defineEmits, defineProps, ref} from "vue";
+import type {PropType} from 'vue';
 import {backgroundImage} from "../utils";
 
 const props = defineProps({
   data: {
-    type: [String, Object, Array] as PropType<string | File | any>,
+    type: [String, Object, Array] as PropType<string | File>,
     required: true
   },
 });
 
 const emit = defineEmits<{
-  (event: "update:clear", value: any): void;
+  (event: "update:clear", value: string | null): void;
 }>();
 
 const overlay = ref<boolean>(false);
 
 const dropzoneClear = () => {
-  emit('update:clear', '');
+  emit('update:clear', null);
 };
 </script>
 

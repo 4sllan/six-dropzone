@@ -1,38 +1,38 @@
 <script setup lang="ts">
-import {defineEmits, defineProps, ref, type Slot} from "vue";
+import {defineEmits, defineProps, ref} from "vue";
 import type {PropType} from 'vue';
 import {backgroundImage} from "../utils";
 
 const props = defineProps({
   data: {
-    type: [String, Object, Array] as PropType<string | File[] | any>,
+    type: [String, Object, Array] as PropType<string | File[]>,
     required: true
   },
 });
 
 const emit = defineEmits<{
-  (event: "update:modelValue", value: string | File | File[] | null): void;
+  (event: "update:clear", value: string | File | File[] | null): void;
 }>();
 
 
 const overlay = ref<boolean[]>([]);
-const dropzoneImg = ref<HTMLElement | null>(null);
+const setDpzRef = ref<HTMLElement[]>([]);
 
 const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) => {
-  // if (Array.isArray(dropzoneFile.value)) {
-  //   dropzoneFile.value.splice(index, 1);
-  //   setTimeout(() => {
-  //     let i = 0;
-  //     ref.forEach(elt => {
-  //       backgroundImage(dropzoneFile.value?.[i] || null, {el: elt});
-  //       i++;
-  //     });
-  //     emit('update:modelValue', dropzoneFile.value);
-  //   }, 5);
-  //   if (!dropzoneFile.value.length) {
-  //     dropzoneFile.value = null;
-  //   }
-  // }
+  if (Array.isArray(props.data)) {
+    props.data.splice(index, 1);
+    setTimeout(() => {
+      let i = 0;
+      ref.forEach(elt => {
+        backgroundImage(props.data?.[i] || null, {el: elt});
+        i++;
+      });
+      emit('update:clear', props.data);
+    }, 5);
+    if (!props.data.length) {
+      emit('update:clear', null);
+    }
+  }
 };
 </script>
 
@@ -42,12 +42,12 @@ const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) =>
       <div
           @vue:mounted="(event: any) => {backgroundImage(item, event)}"
           class="__dpz"
-          ref="dropzoneImg"
+          ref="setDpzRef"
           @mouseover="overlay[index] = true"
           @mouseleave="overlay[index] = false"
           :class="{'_overlay' : overlay[index]}"
       >
-        <div class="content" @click.prevent="dropzoneClearMultiple(item, index, dropzoneImg)">
+        <div class="content" @click.prevent="dropzoneClearMultiple(item, index, setDpzRef)">
           <slot name="componentIcon"></slot>
         </div>
       </div>

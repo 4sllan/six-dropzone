@@ -41,7 +41,6 @@ const emit = defineEmits<{
 
 let dropzoneFile = ref<File | File[] | null>(null);
 const dropzoneRef = ref<HTMLInputElement | null>(null);
-const overlay = ref<boolean | boolean[]>([]);
 const active = ref<boolean>(false);
 
 const toggleActive = (e: DragEvent) => {
@@ -49,7 +48,6 @@ const toggleActive = (e: DragEvent) => {
 
   if (props.multiple) {
     dropzoneFile.value = Array.from(e.dataTransfer.files);
-    overlay.value = [];
   } else {
     dropzoneFile.value = e.dataTransfer.files[0];
   }
@@ -62,7 +60,6 @@ const selectedFile = () => {
 
   if (props.multiple) {
     dropzoneFile.value = Array.from(dropzoneRef.value.files);
-    overlay.value = [];
   } else {
     dropzoneFile.value = dropzoneRef.value.files[0];
   }
@@ -74,7 +71,6 @@ onMounted(() => {
   setTimeout(async () => {
     if (props.multiple && Array.isArray(props.dropMounted)) {
       dropzoneFile.value = [];
-      overlay.value = [];
 
       try {
         const files = await Promise.all(
@@ -119,7 +115,10 @@ onMounted(() => {
       <label :for="id">{{ label }}</label>
     </div>
     <template v-else-if="!props.multiple">
-      <Single :data="dropzoneFile">
+      <Single
+          :data="dropzoneFile"
+          @update:clear="(elt) => {dropzoneFile = elt}"
+      >
         <template #componentIcon>
           <slot name="icon">
             <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -132,7 +131,10 @@ onMounted(() => {
       </Single>
     </template>
     <template v-else>
-      <Sets :data="dropzoneFile">
+      <Sets
+          :data="dropzoneFile"
+          @update:clear="(elt) => {dropzoneFile = elt}"
+      >
         <template #componentIcon>
           <slot name="icon">
             <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
