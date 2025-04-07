@@ -1,27 +1,15 @@
 <script setup>
-import SixDropzone from '../../src/runtime/dropzone.vue'
-
 const photoFile = ref()
 const url = ref('https://i.imgur.com/PcRn7hB.jpeg')
 
 
 const photoFileMultiple = ref()
 const urlsMultiple = ref([
-  {
-    path: "https://i.imgur.com/PcRn7hB.jpeg"
-  },
-  {
-    path: "https://i.imgur.com/HkulqHb.jpeg",
-  },
-  {
-    path: "https://i.imgur.com/cJNCe4F.jpeg",
-  },
-  {
-    path: "https://i.imgur.com/osJyAlk.jpeg",
-  },
-  {
-    path: "https://i.imgur.com/AVU0Q0z.jpeg",
-  },
+  "https://i.imgur.com/PcRn7hB.jpeg",
+  "https://i.imgur.com/HkulqHb.jpeg",
+  "https://i.imgur.com/cJNCe4F.jpeg",
+  "https://i.imgur.com/osJyAlk.jpeg",
+  "https://i.imgur.com/AVU0Q0z.jpeg"
 ])
 
 
@@ -50,7 +38,7 @@ const modelValueFileMultiple = (e) => {
 </script>
 
 <template>
-  <div>
+  <div style="display: flex; gap: 4rem; flex-direction: column">
     <SixDropzone
         id="drop"
         v-model="photoFile"
@@ -59,6 +47,9 @@ const modelValueFileMultiple = (e) => {
         @update:model-value="modelValueFile"
         :drop-mounted="url"
     >
+      <template v-slot:icon>
+        <div style="color:white">X</div>
+      </template>
     </SixDropzone>
     <SixDropzone
         id="dropMultiple"
