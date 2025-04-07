@@ -5,7 +5,7 @@ import {backgroundImage} from "../utils";
 
 const props = defineProps({
   data: {
-    type: [String, Object, Array] as PropType<string | File | File[]>,
+    type: [String, Object, Array] as PropType<string | File[]>,
     required: true
   },
 });
