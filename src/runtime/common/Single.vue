@@ -5,7 +5,7 @@ import {backgroundImage} from "../utils";
 
 const props = defineProps({
   data: {
-    type: [String, Object, Array] as PropType<string | File>,
+    type: [String, Object, Array] as PropType<string | File | any>,
     required: true
   },
 });
@@ -42,5 +42,45 @@ const dropzoneClear = () => {
 </template>
 
 <style scoped>
+.dropzoneImg {
+  width: 100%;
+  height: inherit;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 
+  .content {
+    display: none;
+    position: absolute;
+    cursor: pointer;
+    left: 50%;
+    top: 50%;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+
+    svg {
+      stroke: white;
+      width: 60px;
+      height: 60px;
+    }
+  }
+}
+
+.dropzoneImg._overlay .content {
+  display: flex;
+  transition: 0.3s ease all;
+}
+
+._overlay::before {
+  content: "";
+  top: 0;
+  left: 0;
+  position: absolute;
+  background-color: #000;
+  opacity: 0.25;
+  width: 100%;
+  height: 100%;
+  transition: 0.3s ease all;
+}
 </style>
