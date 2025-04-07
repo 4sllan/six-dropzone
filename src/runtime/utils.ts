@@ -1,4 +1,4 @@
-export const backgroundImage = async (file: File | any, evt: { el: HTMLElement }) => {
+export const backgroundImage = async (file: File | Blob, evt: { el: HTMLElement }) => {
     if (!file) return;
     const reader = new FileReader();
     reader.onloadend = () => {
