@@ -17,7 +17,7 @@ export default defineNuxtModule<ModuleOptions>({
 
         addComponent({
             name: 'six-dropzone',
-            filePath: resolve('./runtime/newDropzone.vue'),
+            filePath: resolve('./runtime/Dropzone.vue'),
             pascalName: 'SixDropzone',
             global: true,
             mode: 'all',
