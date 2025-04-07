@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {ref, onMounted, defineProps, defineEmits} from 'vue';
 import type {PropType} from 'vue';
+import {imageUrlToBase64, dataURLtoFile} from "./utils"
 import Sets from "./common/Sets.vue"
 import Single from "./common/Single.vue"
 
@@ -56,7 +57,6 @@ const toggleActive = (e: DragEvent) => {
   emit('change', dropzoneFile.value);
   emit('update:modelValue', dropzoneFile.value);
 };
-
 const selectedFile = () => {
   if (!dropzoneRef.value || !dropzoneRef.value.files) return;
 
@@ -68,33 +68,6 @@ const selectedFile = () => {
   }
   emit('change', dropzoneFile.value);
   emit('update:modelValue', dropzoneFile.value);
-};
-const imageUrlToBase64 = async (url: string): Promise<string> => {
-  try {
-    const data = await fetch(url);
-    const blob = await data.blob();
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(blob);
-      reader.onloadend = () => resolve(reader.result as string);
-      reader.onerror = reject;
-    });
-  } catch (error) {
-    console.error('Error fetching image:', error);
-    throw error;
-  }
-};
-const dataURLtoFile = (dataurl: string, filename: string): File => {
-  const arr = dataurl.split(','),
-      mime = arr[0].match(/:(.*?);/)?.[1] || '',
-      bstr = atob(arr[arr.length - 1]),
-      n = bstr.length,
-      u8arr = new Uint8Array(n);
-
-  for (let i = 0; i < n; i++) {
-    u8arr[i] = bstr.charCodeAt(i);
-  }
-  return new File([u8arr], filename, {type: mime});
 };
 
 onMounted(() => {
