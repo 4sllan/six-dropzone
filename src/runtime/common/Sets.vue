@@ -72,13 +72,25 @@ const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) =>
     justify-content: center;
     align-items: center;
     transform: translate(-50%, -50%);
-
   }
 }
 
 .__dpz._overlay .content {
   display: flex;
   transition: 0.3s ease all;
+}
+
+.__dpzSets {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: auto auto auto auto;
+
+  .__dpz {
+    width: 180px;
+    height: 120px;
+    background-size: cover;
+    position: relative;
+  }
 }
 
 ._overlay::before {
@@ -91,18 +103,5 @@ const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) =>
   width: 100%;
   height: 100%;
   transition: 0.3s ease all;
-}
-
-.__dpzSets {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: auto auto auto auto;
-
-  .dropzoneImg {
-    width: 180px;
-    height: 120px;
-    background-size: cover;
-    position: relative;
-  }
 }
 </style>
