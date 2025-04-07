@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import {ref, onMounted, defineProps, defineEmits} from 'vue';
 import type {PropType} from 'vue';
+import Sets from "./common/Sets.vue"
+import Single from "./common/Single.vue"
 
 const props = defineProps({
   id: {
@@ -37,7 +39,6 @@ const emit = defineEmits<{
 
 
 let dropzoneFile = ref<File | File[] | null>(null);
-const dropzoneImg = ref<HTMLElement | null>(null);
 const dropzoneRef = ref<HTMLInputElement | null>(null);
 const overlay = ref<boolean | boolean[]>([]);
 const active = ref<boolean>(false);
@@ -68,29 +69,6 @@ const selectedFile = () => {
   emit('change', dropzoneFile.value);
   emit('update:modelValue', dropzoneFile.value);
 };
-
-const dropzoneClear = () => {
-  dropzoneFile.value = null;
-  emit('update:modelValue', '');
-};
-
-const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) => {
-  if (Array.isArray(dropzoneFile.value)) {
-    dropzoneFile.value.splice(index, 1);
-    setTimeout(() => {
-      let i = 0;
-      ref.forEach(elt => {
-        backgroundImage(dropzoneFile.value?.[i] || null, {el: elt});
-        i++;
-      });
-      emit('update:modelValue', dropzoneFile.value);
-    }, 5);
-    if (!dropzoneFile.value.length) {
-      dropzoneFile.value = null;
-    }
-  }
-};
-
 const imageUrlToBase64 = async (url: string): Promise<string> => {
   try {
     const data = await fetch(url);
@@ -106,16 +84,6 @@ const imageUrlToBase64 = async (url: string): Promise<string> => {
     throw error;
   }
 };
-
-const backgroundImage = async (file: File | null, evt: { el: HTMLElement }) => {
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onloadend = () => {
-    evt.el.style.backgroundImage = `url(${reader.result})`;
-  };
-  reader.readAsDataURL(file);
-};
-
 const dataURLtoFile = (dataurl: string, filename: string): File => {
   const arr = dataurl.split(','),
       mime = arr[0].match(/:(.*?);/)?.[1] || '',
@@ -165,70 +133,38 @@ onMounted(() => {
 </script>
 
 <template>
-  <template>
-    <div
-        @dragenter.prevent="toggleActive"
-        @dragleave.prevent="toggleActive"
-        @dragover.prevent @drop.prevent="toggleActive"
-        :class="{ 'active-dropzone': active }"
-        class="dropzone"
-    >
-      <div v-if="!dropzoneFile" class="dropzone_content">
-        <slot name="default"></slot>
-        <label :for="id">{{ label }}</label>
-      </div>
-      <div
-          v-else-if="!props.multiple"
-          class="dropzoneImg"
-          @mouseover="overlay = true"
-          @mouseleave="overlay = false"
-          :class="{ '_overlay': overlay }"
-      >
-        <div class="content" @click.prevent="dropzoneClear">
-          <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="15" y1="9" x2="9" y2="15"/>
-            <line x1="9" y1="9" x2="15" y2="15"/>
-          </svg>
-        </div>
-      </div>
-      <div class="dropzoneImgMultiple" v-else>
-        <template v-for="(item, index) in dropzoneFile" :key="index">
-          <div
-              class="dropzoneImg"
-              @mouseover="overlay[index] = true"
-              @mouseleave="overlay[index] = false"
-              :class="{ '_overlay': overlay[index] }"
-          >
-            <div
-                class="content"
-                @click.prevent="dropzoneClearMultiple(index)"
-            >
-              <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="15" y1="9" x2="9" y2="15"/>
-                <line x1="9" y1="9" x2="15" y2="15"/>
-              </svg>
-            </div>
-          </div>
-        </template>
-      </div>
-      <input
-          type="file"
-          :id="id"
-          class="dropzoneFile"
-          @change="selectedFile"
-          :multiple="multiple"
-          ref="dropzoneRef"
-      />
-      <div class="input__details" v-if="props.errorMessages">
-        <div class="messages" role="alert" aria-live="polite">
-          <div class="messages__message">{{ props.errorMessages }}</div>
-        </div>
+  <div
+      @dragenter.prevent="toggleActive"
+      @dragleave.prevent="toggleActive"
+      @dragover.prevent
+      @drop.prevent="toggleActive"
+      :class="{ 'active-dropzone': active}"
+      class="dropzone"
+  >
+    <div v-if="!dropzoneFile" class="dropzone_content">
+      <slot name="default"></slot>
+      <label :for="id">{{ label }}</label>
+    </div>
+    <template v-else-if="!props.multiple">
+      <Single :data="dropzoneFile"/>
+    </template>
+    <template v-else>
+      <Sets :data="dropzoneFile"/>
+    </template>
+    <input
+        type="file"
+        :id="id"
+        class="dropzoneFile"
+        @change="selectedFile"
+        :multiple="multiple"
+        ref="dropzoneRef"
+    />
+    <div class="input__details" v-if="props.errorMessages">
+      <div class="messages" role="alert" aria-live="polite">
+        <div class="messages__message">{{ props.errorMessages }}</div>
       </div>
     </div>
-  </template>
-
+  </div>
 </template>
 
 <style scoped>
