@@ -37,11 +37,11 @@ const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) =>
 </script>
 
 <template>
-  <div class="dropzoneImgMultiple">
+  <div class="__dpzSets">
     <template v-for="(item, index) in props.data">
       <div
           @vue:mounted="(event: any) => {backgroundImage(item, event)}"
-          class="dropzoneImg"
+          class="__dpz"
           ref="dropzoneImg"
           @mouseover="overlay[index] = true"
           @mouseleave="overlay[index] = false"
@@ -56,7 +56,7 @@ const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) =>
 </template>
 
 <style scoped>
-.dropzoneImg {
+.__dpz {
   width: 100%;
   height: inherit;
   background-position: center;
@@ -73,30 +73,12 @@ const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) =>
     align-items: center;
     transform: translate(-50%, -50%);
 
-    svg {
-      stroke: white;
-      width: 60px;
-      height: 60px;
-    }
   }
 }
 
-.dropzoneImg._overlay .content {
+.__dpz._overlay .content {
   display: flex;
   transition: 0.3s ease all;
-}
-
-.dropzoneImgMultiple {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: auto auto auto auto;
-
-  .dropzoneImg {
-    width: 180px;
-    height: 120px;
-    background-size: cover;
-    position: relative;
-  }
 }
 
 ._overlay::before {
@@ -109,5 +91,18 @@ const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) =>
   width: 100%;
   height: 100%;
   transition: 0.3s ease all;
+}
+
+.__dpzSets {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: auto auto auto auto;
+
+  .dropzoneImg {
+    width: 180px;
+    height: 120px;
+    background-size: cover;
+    position: relative;
+  }
 }
 </style>

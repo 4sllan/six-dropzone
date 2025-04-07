@@ -24,7 +24,7 @@ const dropzoneClear = () => {
 <template>
   <div
       @vue:mounted="(event: any) => {backgroundImage(props.data, event)}"
-      class="dropzoneImg"
+      class="__dpz"
       @mouseover="overlay = true"
       @mouseleave="overlay = false"
       :class="{'_overlay' : overlay}"
@@ -36,7 +36,7 @@ const dropzoneClear = () => {
 </template>
 
 <style scoped>
-.dropzoneImg {
+.__dpz {
   width: 100%;
   height: inherit;
   background-position: center;
@@ -53,11 +53,10 @@ const dropzoneClear = () => {
     align-items: center;
     transform: translate(-50%, -50%);
 
-
   }
 }
 
-.dropzoneImg._overlay .content {
+.__dpz._overlay .content {
   display: flex;
   transition: 0.3s ease all;
 }
