@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {defineEmits, defineProps, ref} from "vue";
+import {defineEmits, defineProps, ref, type Slot} from "vue";
 import type {PropType} from 'vue';
 import {backgroundImage} from "../utils";
 
@@ -48,11 +48,7 @@ const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) =>
           :class="{'_overlay' : overlay[index]}"
       >
         <div class="content" @click.prevent="dropzoneClearMultiple(item, index, dropzoneImg)">
-          <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="15" y1="9" x2="9" y2="15"/>
-            <line x1="9" y1="9" x2="15" y2="15"/>
-          </svg>
+          <slot name="componentIcon"></slot>
         </div>
       </div>
     </template>

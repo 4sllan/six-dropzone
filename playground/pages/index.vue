@@ -47,6 +47,9 @@ const modelValueFileMultiple = (e) => {
         @update:model-value="modelValueFile"
         :drop-mounted="url"
     >
+      <template v-slot:icon>
+        <div style="color:white">X</div>
+      </template>
     </SixDropzone>
     <SixDropzone
         id="dropMultiple"

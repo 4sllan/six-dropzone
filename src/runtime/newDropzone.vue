@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref, onMounted, defineProps, defineEmits} from 'vue';
+import {ref, onMounted, defineProps, defineEmits, type Slot} from 'vue';
 import type {PropType} from 'vue';
 import {imageUrlToBase64, dataURLtoFile} from "./utils"
 import Sets from "./common/Sets.vue"
@@ -119,10 +119,30 @@ onMounted(() => {
       <label :for="id">{{ label }}</label>
     </div>
     <template v-else-if="!props.multiple">
-      <Single :data="dropzoneFile"/>
+      <Single :data="dropzoneFile">
+        <template #componentIcon>
+          <slot name="icon">
+            <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="15" y1="9" x2="9" y2="15"/>
+              <line x1="9" y1="9" x2="15" y2="15"/>
+            </svg>
+          </slot>
+        </template>
+      </Single>
     </template>
     <template v-else>
-      <Sets :data="dropzoneFile"/>
+      <Sets :data="dropzoneFile">
+        <template #componentIcon>
+          <slot name="icon">
+            <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="15" y1="9" x2="9" y2="15"/>
+              <line x1="9" y1="9" x2="15" y2="15"/>
+            </svg>
+          </slot>
+        </template>
+      </Sets>
     </template>
     <input
         type="file"
@@ -183,4 +203,9 @@ onMounted(() => {
   background-color: #fff;
 }
 
+svg {
+  stroke: white;
+  width: 60px;
+  height: 60px;
+}
 </style>
