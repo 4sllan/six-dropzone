@@ -81,6 +81,7 @@ npx nuxi@latest module add six-dropzone
             @drop.prevent="drop"
             @change="selectedFile"
             @update:model-value="modelValue"
+            :accept="['image/png', 'image/jpeg']"
             :drop-mounted="url"
     ></SixDropzone>
 </template>
@@ -95,7 +96,7 @@ npx nuxi@latest module add six-dropzone
 | `dropMounted`    | `String`          | `undefined`   | The image URL.                                                                                                                                                                           |
 | `label`          | `String`          | `Select File` | Sets the button text                                                                                                                                                                     |
 | `error-messages` | `String/String[]` | `[]`          | Puts the input in an error state and passes through custom error messages. Will be combined with any validations that occur from the rules prop. This field will not trigger validation. |
-| `accept`         |                   |               |                                                                                                                                                                                          |
+| `accept`         | `String/String[]` | `*`           |                                                                                                                                                                                          |
 
 ### Events
 
