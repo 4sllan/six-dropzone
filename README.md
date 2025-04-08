@@ -94,7 +94,8 @@ npx nuxi@latest module add six-dropzone
 | `dropMounted`    | `String`          | `undefined`   | The image URL.                                                                                                                                                                           |
 | `label`          | `String`          | `Select File` | Sets the button text                                                                                                                                                                     |
 | `error-messages` | `String/String[]` | `[]`          | Puts the input in an error state and passes through custom error messages. Will be combined with any validations that occur from the rules prop. This field will not trigger validation. |
-| `accept`         | `String/String[]` | `*`           |                                                                                                                                                                                          |
+| `accept`         | `String/String[]` | `" "`         | Defines the types of files that are allowed. You can pass a single string (e.g., 'image/*') or an array of strings (e.g., ['image/png', 'image/jpeg']).                                  |
+| `multiple`       | `Boolean`         | `false`       | Allows uploading multiple files if set to true.                                                                                                                                          |                                                                                                                                        
 
 ### Events
 
