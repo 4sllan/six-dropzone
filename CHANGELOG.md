@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.3.6] - 2025-04-08
+
+### ✨ Added
+
+- Basic drag and drop file upload
+
+- `accept` prop to restrict file types (String | String[])
+
+---
+
 ## [0.3.5] - 2025-04-07
 
 ### New Features
