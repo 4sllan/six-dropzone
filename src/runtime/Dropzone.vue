@@ -1,9 +1,16 @@
 <script setup lang="ts">
-import {ref, onMounted, defineProps, defineEmits, type Slot} from 'vue';
+import {ref, onMounted, type Slot} from 'vue';
 import type {PropType} from 'vue';
 import {imageUrlToBase64, dataURLtoFile, isFileAccepted} from "./utils"
-import Sets from "./common/Sets.vue"
-import Single from "./common/Single.vue"
+
+import {Sets, Single} from "./common"
+
+defineOptions({
+  components: {
+    Sets,
+    Single
+  }
+});
 
 const props = defineProps({
   id: {
