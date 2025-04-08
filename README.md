@@ -6,8 +6,6 @@
 
 <br>
 
-[![Static Badge](https://img.shields.io/badge/NPM:six-dropzone?style=flat-square&colorA=18181B&colorB=28CF8D)](https://www.npmjs.com/package/six-dropzone)
-[![Static Badge](https://img.shields.io/badge/GITHUB:six-dropzone?style=flat-square&colorA=18181B&colorB=28CF8D)](https://github.com/4sllan/six-dropzone)
 [![npm version](https://img.shields.io/npm/v/six-dropzone/latest.svg?style=flat-square&colorA=18181B&colorB=28CF8D)](https://www.npmjs.com/package/six-dropzone)
 ![GitHub License][license]
 [![npm downloads](https://img.shields.io/npm/dt/six-dropzone.svg?style=flat-square&colorA=18181B&colorB=28CF8D)](https://www.npmjs.com/package/six-dropzone)
@@ -81,6 +79,7 @@ npx nuxi@latest module add six-dropzone
             @drop.prevent="drop"
             @change="selectedFile"
             @update:model-value="modelValue"
+            :accept="['image/png', 'image/jpeg']"
             :drop-mounted="url"
     ></SixDropzone>
 </template>
@@ -95,7 +94,8 @@ npx nuxi@latest module add six-dropzone
 | `dropMounted`    | `String`          | `undefined`   | The image URL.                                                                                                                                                                           |
 | `label`          | `String`          | `Select File` | Sets the button text                                                                                                                                                                     |
 | `error-messages` | `String/String[]` | `[]`          | Puts the input in an error state and passes through custom error messages. Will be combined with any validations that occur from the rules prop. This field will not trigger validation. |
-| `accept`         |                   |               |                                                                                                                                                                                          |
+| `accept`         | `String/String[]` | `" "`         | Defines the types of files that are allowed. You can pass a single string (e.g., 'image/*') or an array of strings (e.g., ['image/png', 'image/jpeg']).                                  |
+| `multiple`       | `Boolean`         | `false`       | Allows uploading multiple files if set to true.                                                                                                                                          |                                                                                                                                        
 
 ### Events
 
