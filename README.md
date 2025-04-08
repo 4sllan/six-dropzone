@@ -32,8 +32,6 @@
 
 ## Features
 
-
-
 ## Demo
 
 [![view six-dropzone](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/six-dropzone-forked-mtmwt7)
@@ -68,13 +66,13 @@ npx nuxi@latest module add six-dropzone
 <script setup>
     const photo = ref()
     const drop = (e) => {
-      console.log(e.dataTransfer.files[0], 'drop')
+        console.log(e.dataTransfer.files[0], 'drop')
     }
     const selectedFile = (e) => {
-      console.log(e, 'change')
+        console.log(e, 'change')
     };
     const modelValue = (e) => {
-      console.log(e, 'model-value')
+        console.log(e, 'model-value')
     }
 </script>
 <template>
@@ -97,20 +95,22 @@ npx nuxi@latest module add six-dropzone
 | `dropMounted`    | `String`          | `undefined`   | The image URL.                                                                                                                                                                           |
 | `label`          | `String`          | `Select File` | Sets the button text                                                                                                                                                                     |
 | `error-messages` | `String/String[]` | `[]`          | Puts the input in an error state and passes through custom error messages. Will be combined with any validations that occur from the rules prop. This field will not trigger validation. |
+| `accept`         |                   |               |                                                                                                                                                                                          |
 
 ### Events
 
-| Name                | Type      | Description                                               | 
-|---------------------|-----------|-----------------------------------------------------------|
-| `drop`              | `[File]`  | drop value of the component.                              |
-| `change`            | `[File]`  | value of the component.                                   |
-| `update:modelValue` | `[File]`  | Event that is emitted when the component’s model changes. |
+| Name                | Type     | Description                                               | 
+|---------------------|----------|-----------------------------------------------------------|
+| `drop`              | `[File]` | drop value of the component.                              |
+| `change`            | `[File]` | value of the component.                                   |
+| `update:modelValue` | `[File]` | Event that is emitted when the component’s model changes. |
 
 ### Slots
 
 | Name      | Description           | 
 |-----------|-----------------------|
 | `Default` | The default Vue slot. |
+| `Icon`    | change or close icons |
 
 ## ⚖️ License
 

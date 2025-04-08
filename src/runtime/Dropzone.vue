@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {ref, onMounted, defineProps, defineEmits, type Slot} from 'vue';
 import type {PropType} from 'vue';
-import {imageUrlToBase64, dataURLtoFile} from "./utils"
+import {imageUrlToBase64, dataURLtoFile, isFileAccepted} from "./utils"
 import Sets from "./common/Sets.vue"
 import Single from "./common/Single.vue"
 
@@ -27,6 +27,10 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  accept: {
+    type: [String, Array] as PropType<string | string[]>,
+    default: '',
+  },
   errorMessages: {
     type: String,
     default: ''
@@ -46,10 +50,13 @@ const active = ref<boolean>(false);
 const toggleActive = (e: DragEvent) => {
   if (!e.dataTransfer) return;
 
+  const files = Array.from(e.dataTransfer.files);
+  const acceptedFiles = files.filter(file => isFileAccepted(file, props.accept));
+
   if (props.multiple) {
-    dropzoneFile.value = Array.from(e.dataTransfer.files);
+    dropzoneFile.value = acceptedFiles;
   } else {
-    dropzoneFile.value = e.dataTransfer.files[0];
+    dropzoneFile.value = acceptedFiles[0] || null;
   }
   active.value = !active.value;
   emit('change', dropzoneFile.value);
@@ -152,6 +159,7 @@ onMounted(() => {
         class="dropzoneFile"
         @change="selectedFile"
         :multiple="multiple"
+        :accept="Array.isArray(accept) ? accept.join(',') : accept"
         ref="dropzoneRef"
     />
     <div class="input__details" v-if="props.errorMessages">
