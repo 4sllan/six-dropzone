@@ -45,6 +45,7 @@ const modelValueFileMultiple = (e) => {
         @drop.prevent="drop"
         @change="selectedFile"
         @update:model-value="modelValueFile"
+        :accept="['image/png', 'image/jpeg']"
         :drop-mounted="url"
     >
       <template v-slot:icon>
