@@ -5,6 +5,13 @@ import {imageUrlToBase64, dataURLtoFile, isFileAccepted} from "./utils"
 
 import {Sets, Single} from "./common"
 
+defineOptions({
+  components: {
+    Sets,
+    Single
+  }
+});
+
 const props = defineProps({
   id: {
     type: String,
