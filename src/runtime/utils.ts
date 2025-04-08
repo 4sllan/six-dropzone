@@ -35,3 +35,18 @@ export const dataURLtoFile = (dataurl: string, filename: string): File => {
     }
     return new File([u8arr], filename, {type: mime});
 };
+
+export const isFileAccepted = (file: File, accept: string | string[]) => {
+    if (!accept) return true;
+
+    const acceptedTypes = Array.isArray(accept)
+        ? accept
+        : accept.split(',').map(type => type.trim());
+
+    return acceptedTypes.some(type => {
+        if (type.startsWith('.')) {
+            return file.name.endsWith(type);
+        }
+        return file.type.startsWith(type.replace('/*', ''));
+    });
+};
