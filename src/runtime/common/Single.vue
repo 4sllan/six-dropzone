@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {defineEmits, defineProps, ref} from "vue";
+import {ref} from "vue";
 import type {PropType} from 'vue';
 import {backgroundImage} from "../utils";
 
@@ -19,11 +19,14 @@ const overlay = ref<boolean>(false);
 const dropzoneClear = () => {
   emit('update:clear', null);
 };
+
+const init = (el: any) => backgroundImage(props.data, el)
+
 </script>
 
 <template>
   <div
-      @vue:mounted="(event: any) => {backgroundImage(props.data, event)}"
+      @vue:mounted="init"
       class="__dpz"
       @mouseover="overlay = true"
       @mouseleave="overlay = false"
