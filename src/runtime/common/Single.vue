@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {defineEmits, defineProps, ref} from "vue";
+import {ref} from "vue";
 import type {PropType} from 'vue';
 import {backgroundImage} from "../utils";
 
