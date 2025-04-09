@@ -15,26 +15,18 @@ const emit = defineEmits<{
 }>();
 
 const overlay = ref<boolean>(false);
-const elRef = ref<HTMLElement | null>(null)
 
 const dropzoneClear = () => {
   emit('update:clear', null);
 };
-const updateBackground = async () => {
-  await nextTick()
-  if (elRef.value) {
-    backgroundImage(props.data, elRef.value)
-  }
-}
 
-watch(() => props.data, () => {
-  updateBackground()
-}, {immediate: true})
+const init = (el: any) => backgroundImage(props.data, el)
+
 </script>
 
 <template>
   <div
-      ref="elRef"
+      @vue:mounted="init"
       class="__dpz"
       @mouseover="overlay = true"
       @mouseleave="overlay = false"
