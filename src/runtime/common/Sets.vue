@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {ref, watch, nextTick } from "vue";
 import type {PropType} from 'vue';
 import {backgroundImage} from "../utils";
 
@@ -18,6 +18,13 @@ const emit = defineEmits<{
 const overlay = ref<boolean[]>([]);
 const setDpzRef = ref<HTMLElement[]>([]);
 
+const updatePreviews = async () => {
+  await nextTick();
+  props.data.forEach((item, i) => {
+    const el = setDpzRef.value[i];
+    if (el) backgroundImage(item, el);
+  });
+};
 const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) => {
   if (Array.isArray(props.data)) {
     props.data.splice(index, 1);
@@ -34,6 +41,14 @@ const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) =>
     }
   }
 };
+
+watch(() => props.data, () => {
+  updatePreviews();
+}, { deep: true });
+
+onMounted(() => {
+  updatePreviews();
+});
 </script>
 
 <template>
