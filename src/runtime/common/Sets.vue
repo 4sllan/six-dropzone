@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref, watch, nextTick} from "vue";
+import {ref, onMounted, watch, nextTick} from "vue";
 import type {PropType} from 'vue';
 import {backgroundImage} from "../utils";
 
