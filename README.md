@@ -104,6 +104,7 @@ npx nuxi@latest module add six-dropzone
 | `drop`              | `[File]` | drop value of the component.                              |
 | `change`            | `[File]` | value of the component.                                   |
 | `update:modelValue` | `[File]` | Event that is emitted when the component’s model changes. |
+| `addFile`           |          |                                                           |
 
 ### Slots
 

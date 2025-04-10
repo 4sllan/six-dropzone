@@ -20,6 +20,8 @@ const elRef = ref<HTMLElement | null>(null)
 const dropzoneClear = () => {
   emit('update:clear', null);
 };
+
+
 const updateBackground = async () => {
   await nextTick()
   if (elRef.value) {
@@ -29,7 +31,8 @@ const updateBackground = async () => {
 
 watch(() => props.data, () => {
   updateBackground()
-}, {immediate: true})
+}, { immediate: true })
+
 </script>
 
 <template>
