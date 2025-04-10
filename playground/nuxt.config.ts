@@ -1,12 +1,13 @@
 import myModule from '../src/module'
+
 export default defineNuxtConfig({
-  devtools: {
-      enabled: true
-  },
+    devtools: {
+        enabled: true
+    },
 
-  modules: [
-      myModule
-  ],
+    modules: [
+        myModule
+    ],
 
-  compatibilityDate: '2025-04-02'
+    compatibilityDate: '2025-04-02'
 })
