@@ -16,8 +16,8 @@
       "import": "./dist/module.mjs"
     },
     "./vue": {
-      "types": "./dist/types.d.mts",
-      "import": "./dist/module.mjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     }
   },
   "main": "./dist/module.mjs",
