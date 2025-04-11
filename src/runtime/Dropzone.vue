@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import {ref, onMounted, type Slot} from 'vue';
+import {ref, onMounted, watch, nextTick, type Slot} from 'vue';
 import type {PropType} from 'vue';
+import {defu} from 'defu';
 import {imageUrlToBase64, dataURLtoFile, isFileAccepted} from "./utils"
 
 import {Sets, Single} from "./common"
@@ -73,13 +74,21 @@ const selectedFile = () => {
   if (!dropzoneRef.value || !dropzoneRef.value.files) return;
 
   if (props.multiple) {
-    dropzoneFile.value = Array.from(dropzoneRef.value.files);
+    dropzoneFile.value = (dropzoneFile.value || []).concat(Array.from(dropzoneRef.value?.files || []));
   } else {
     dropzoneFile.value = dropzoneRef.value.files[0];
   }
   emit('change', dropzoneFile.value);
   emit('update:modelValue', dropzoneFile.value);
 };
+const addFile = () => {
+  dropzoneRef.value?.click();
+};
+
+
+watch(() => props.modelValue, (elt) => {
+  dropzoneFile.value = elt;
+}, {immediate: true})
 
 onMounted(() => {
   setTimeout(async () => {
@@ -112,6 +121,10 @@ onMounted(() => {
     }
   }, 500);
 });
+
+defineExpose({
+  addFile
+})
 
 </script>
 

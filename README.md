@@ -12,7 +12,7 @@
 [![Nuxt][nuxt-src]][nuxt-href]
 [![Static Badge](https://img.shields.io/badge/-%E2%99%A5%20Sponsors-ec5cc6?style=flat-square)](https://github.com/sponsors/4sllan)
 
-[Demo online](https://codesandbox.io/p/sandbox/six-dropzone-forked-mtmwt7)
+[Demo online](https://codesandbox.io/p/devbox/jgrd5q)
 
 
 ---
@@ -32,7 +32,7 @@
 
 ## Demo
 
-[![view six-dropzone](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/six-dropzone-forked-mtmwt7)
+[![view six-dropzone](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/devbox/jgrd5q)
 
 ## Setup
 
@@ -104,6 +104,7 @@ npx nuxi@latest module add six-dropzone
 | `drop`              | `[File]` | drop value of the component.                              |
 | `change`            | `[File]` | value of the component.                                   |
 | `update:modelValue` | `[File]` | Event that is emitted when the component’s model changes. |
+| `addFile`           |          |                                                           |
 
 ### Slots
 

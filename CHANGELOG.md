@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 
+[v0.4.4] - 2025-04-11
+
+### Added
+- 🎉 Standalone Component Support
+- six-dropzone can now be used outside of Nuxt 3, directly in Vue 3 projects.
+
+- Exported the SixDropzone component separately.
+
+- New entry point: `six-dropzone/vue`.
+
+### Changed
+- 📦 Updated package.json:
+
+- Added multiple exports (module for Nuxt, component for Vue).
+
+- 🛠️ Separated build using Vite to generate index.mjs and index.cjs.
+
+----
+
+## [v0.4.1] - 2025-04-09
+
+### ✨New Features
+
+- Improved the UI experience with dynamic background image updates that automatically refresh visual previews when content changes.
+Chores
+
+- Upgraded the package version to 0.4.1 to ensure continued system stability and performance.
+
+---
+
 ## [v0.3.6] - 2025-04-08
 
 ### ✨ Added

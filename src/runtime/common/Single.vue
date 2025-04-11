@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {ref, watch, nextTick} from "vue";
 import type {PropType} from 'vue';
 import {backgroundImage} from "../utils";
 
@@ -15,18 +15,29 @@ const emit = defineEmits<{
 }>();
 
 const overlay = ref<boolean>(false);
+const elRef = ref<HTMLElement | null>(null)
 
 const dropzoneClear = () => {
   emit('update:clear', null);
 };
 
-const init = (el: any) => backgroundImage(props.data, el)
+
+const updateBackground = async () => {
+  await nextTick()
+  if (elRef.value) {
+    backgroundImage(props.data, elRef.value)
+  }
+}
+
+watch(() => props.data, () => {
+  updateBackground()
+}, { immediate: true })
 
 </script>
 
 <template>
   <div
-      @vue:mounted="init"
+      ref="elRef"
       class="__dpz"
       @mouseover="overlay = true"
       @mouseleave="overlay = false"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {ref, onMounted, watch, nextTick} from "vue";
 import type {PropType} from 'vue';
 import {backgroundImage} from "../utils";
 
@@ -16,7 +16,16 @@ const emit = defineEmits<{
 
 
 const overlay = ref<boolean[]>([]);
-const setDpzRef = ref<HTMLElement[]>([]);
+const elRef = ref<HTMLElement[]>([]);
+
+
+const updatePreviews = async () => {
+  await nextTick();
+  props.data.forEach((item, i) => {
+    const el = elRef.value[i];
+    if (el) backgroundImage(item, el);
+  });
+};
 
 const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) => {
   if (Array.isArray(props.data)) {
@@ -24,7 +33,7 @@ const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) =>
     setTimeout(() => {
       let i = 0;
       ref.forEach(elt => {
-        backgroundImage(props.data?.[i] || null, {el: elt});
+        backgroundImage(props.data?.[i] || null, elt);
         i++;
       });
       emit('update:clear', props.data);
@@ -34,20 +43,27 @@ const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) =>
     }
   }
 };
+
+watch(() => props.data, () => {
+  updatePreviews();
+}, {deep: true});
+
+onMounted(() => {
+  updatePreviews();
+});
 </script>
 
 <template>
   <div class="__dpzSets">
     <template v-for="(item, index) in props.data">
       <div
-          @vue:mounted="(event: any) => {backgroundImage(item, event)}"
           class="__dpz"
-          ref="setDpzRef"
+          ref="elRef"
           @mouseover="overlay[index] = true"
           @mouseleave="overlay[index] = false"
           :class="{'_overlay' : overlay[index]}"
       >
-        <div class="content" @click.prevent="dropzoneClearMultiple(item, index, setDpzRef)">
+        <div class="content" @click.prevent="dropzoneClearMultiple(item, index, elRef)">
           <slot name="componentIcon"></slot>
         </div>
       </div>
