@@ -14,10 +14,6 @@
     ".": {
       "types": "./dist/types.d.mts",
       "import": "./dist/module.mjs"
-    },
-    "./vue": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
     }
   },
   "main": "./dist/module.mjs",
@@ -54,7 +50,6 @@
   },
   "dependencies": {
     "@nuxt/schema": "^3.16.2",
-    "defu": "^6.1.4",
     "nuxt": "^3.16.2"
   }
 }
