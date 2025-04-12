@@ -14,10 +14,6 @@
     ".": {
       "types": "./dist/types.d.mts",
       "import": "./dist/module.mjs"
-    },
-    "./vue": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
     }
   },
   "main": "./dist/module.mjs",
@@ -32,7 +28,7 @@
     "dist"
   ],
   "scripts": {
-    "prepack": "nuxt-module-build && vite build",
+    "prepack": "nuxt-module-build",
     "build": "nuxi build",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "nuxi prepare playground && tsc --noEmit",
@@ -54,8 +50,6 @@
   },
   "dependencies": {
     "@nuxt/schema": "^3.16.2",
-    "defu": "^6.1.4",
-    "nuxt": "^3.16.2",
-    "vite-plugin-dts": "^4.5.3"
+    "nuxt": "^3.16.2"
   }
 }
