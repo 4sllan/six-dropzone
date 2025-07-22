@@ -85,6 +85,11 @@ const addFile = () => {
   dropzoneRef.value?.click();
 };
 
+const clearFile = (value) => {
+  dropzoneFile.value = null;
+  emit('update:modelValue', dropzoneFile.value);
+  emit('change', dropzoneFile.value);
+};
 
 watch(() => props.modelValue, (elt) => {
   dropzoneFile.value = elt;
@@ -123,7 +128,8 @@ onMounted(() => {
 });
 
 defineExpose({
-  addFile
+  addFile,
+  clearFile
 })
 
 </script>
@@ -144,7 +150,7 @@ defineExpose({
     <template v-else-if="!props.multiple">
       <Single
           :data="dropzoneFile"
-          @update:clear="(elt) => {dropzoneFile = elt}"
+          @update:clear="clearFile"
       >
         <template #componentIcon>
           <slot name="icon">
