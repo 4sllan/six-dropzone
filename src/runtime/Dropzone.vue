@@ -85,10 +85,9 @@ const addFile = () => {
   dropzoneRef.value?.click();
 };
 
-const clearFile = (value) => {
-  dropzoneFile.value = null;
-  emit('update:modelValue', dropzoneFile.value);
-  emit('change', dropzoneFile.value);
+const clearFile = () => {
+    dropzoneFile.value = null;
+    emit('update:modelValue', dropzoneFile.value);
 };
 
 watch(() => props.modelValue, (elt) => {

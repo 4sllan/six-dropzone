@@ -111,6 +111,7 @@ const applyCroppedMultiple = (file, index) => {
       >
       </SixDropzone>
       <button @click="$refs.eltMultiple.addFile()">Add File</button>
+      <button @click="$refs.eltMultiple.clearFile()">clear File</button>
     </div>
 
 
