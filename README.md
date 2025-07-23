@@ -1,6 +1,6 @@
 <div align="center">
 <img src=".github/six-dropzone.svg" width="400">
-<p align="center">6 Dropzone support for Vue 3 / Nuxt 3</p>
+<p align="center">6 Dropzone support for Nuxt 3</p>
 </div>
 
 
@@ -105,6 +105,7 @@ npx nuxi@latest module add six-dropzone
 | `change`            | `[File]` | value of the component.                                   |
 | `update:modelValue` | `[File]` | Event that is emitted when the component’s model changes. |
 | `addFile`           |          |                                                           |
+| `clearFile`         |          |                                                           |
 
 ### Slots
 
