@@ -1,12 +1,12 @@
 {
   "name": "six-dropzone",
-  "version": "0.4.7",
-  "description": "Nuxt.js 3 Dropzone",
+  "version": "0.4.8",
+  "description": "A powerful and flexible dropzone module for Nuxt.js 4, providing seamless file upload functionality with drag-and-drop support",
   "repository": "https://github.com/4sllan/six-dropzone",
   "author": "Aslan Gama <@4slan>",
   "keywords": [
     "dropzone",
-    "Nuxt.js 3"
+    "Nuxt.js 4"
   ],
   "license": "MIT",
   "type": "module",
@@ -28,28 +28,37 @@
     "dist"
   ],
   "scripts": {
-    "prepack": "nuxt-module-build",
+    "prepack": "nuxt-module-build build",
     "build": "nuxi build",
-    "lint": "eslint . --max-warnings=0",
+    "lint": "eslint . --fix",
     "typecheck": "nuxi prepare playground && tsc --noEmit",
+    "postinstall": "nuxi prepare",
     "dev": "nuxi dev playground",
     "dev:prepare": "nuxt-module-build --stub",
-    "test": "vitest run",
-    "test:watch": "vitest watch"
-  },
-  "devDependencies": {
-    "@nuxt/eslint-config": "^1.3.0",
-    "@nuxt/module-builder": "latest",
-    "@nuxt/test-utils": "^3.17.2",
-    "@vue/test-utils": "^2.4.6",
-    "eslint": "^9.23.0",
-    "happy-dom": "^17.4.4",
-    "playwright-core": "^1.51.1",
-    "typescript": "^5.8.2",
-    "vitest": "^3.1.1"
+    "test": "vitest run --reporter=verbose --silent=false",
+    "test:watch": "vitest watch --reporter=verbose --silent=false",
+    "test:debug": "vitest --inspect-brk --reporter=verbose --silent=false",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
-    "@nuxt/schema": "^3.16.2",
-    "nuxt": "^3.16.2"
+    "@nuxt/kit": "^4.4.8",
+    "@nuxt/schema": "^4.4.8",
+    "nuxt": "^4.4.8"
+  },
+  "devDependencies": {
+    "@nuxt/eslint-config": "^1.16.0",
+    "@nuxt/module-builder": "^1.0.2",
+    "@nuxt/test-utils": "^4.0.3",
+    "@types/node": "^25.9.3",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "@vue/test-utils": "^2.4.11",
+    "changelogen": "^0.6.2",
+    "eslint": "^10.5.0",
+    "happy-dom": "^20.10.4",
+    "playwright-core": "^1.61.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9",
+    "vue": "^3.5.38"
   }
 }

@@ -9,7 +9,7 @@ export default defineNuxtModule<ModuleOptions>({
         name: PACKAGE_NAME,
         configKey: 'SixDropzone',
         compatibility: {
-            nuxt: '^3.0.0',
+            nuxt: '^4.0.0',
         },
     },
     setup(_: ModuleOptions, nuxt) {
