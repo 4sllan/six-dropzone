@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 
 [v0.4.4] - 2025-04-11
 
+## v0.4.9
+
+[compare changes](https://github.com/4sllan/six-dropzone/compare/v1.0.5...v0.4.9)
+
+### 🚀 Enhancements
+
+- **test:** Adiciona configuração inicial do Vitest ([99bb350](https://github.com/4sllan/six-dropzone/commit/99bb350))
+- **prettier:** Adiciona configuração e ignorados do Prettier ([46f03da](https://github.com/4sllan/six-dropzone/commit/46f03da))
+- **core:** Configura ESLint com formato flat e regras Nuxt ([3926491](https://github.com/4sllan/six-dropzone/commit/3926491))
+- **ci/release:** Implementar fluxo de CI/CD para release ([d5e96fd](https://github.com/4sllan/six-dropzone/commit/d5e96fd))
+- **test:** Adiciona testes abrangentes para dropzone e utils ([547b0fa](https://github.com/4sllan/six-dropzone/commit/547b0fa))
+- **core:** Migra o projeto para PNPM e atualiza dependências ([56f3d0b](https://github.com/4sllan/six-dropzone/commit/56f3d0b))
+
+### 🩹 Fixes
+
+- **assets:** Move imagem checkerboard.jpg ([590f080](https://github.com/4sllan/six-dropzone/commit/590f080))
+
+### 💅 Refactors
+
+- **core:** Move componentes e paginas para app/ ([f5cf26d](https://github.com/4sllan/six-dropzone/commit/f5cf26d))
+
+### ❤️ Contributors
+
+- Aslan.gama <aslan.gama@sixchains.com.br>
+
 ### Added
 - 🎉 Standalone Component Support
 - six-dropzone can now be used outside of Nuxt 3, directly in Vue 3 projects.
