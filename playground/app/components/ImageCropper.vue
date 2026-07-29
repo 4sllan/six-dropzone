@@ -1,98 +1,98 @@
 <script setup>
-// import {ref, watch} from 'vue'
-// import {Cropper} from 'vue-advanced-cropper'
-// import 'vue-advanced-cropper/dist/style.css'
-//
-// const props = defineProps({
-//   src: String,
-// })
-// const showDeleteConfirm = ref(false)
-// const emit = defineEmits(['cropped', 'close'])
-//
-// const cropperRef = ref(null)
-// const zoomLevel = ref(1)
-// const minZoom = 0
-// const maxZoom = 1
-// let previousZoom = 1
-//
-// const applyZoom = () => {
-//   const cropper = cropperRef.value
-//   if (cropper) {
-//     const direction = zoomLevel.value > previousZoom ? 'in' : 'out'
-//     cropper.zoom(zoomLevel.value / previousZoom)
-//     previousZoom = zoomLevel.value
-//   }
-// }
-//
-// const confirmDelete = () => {
-//   showDeleteConfirm.value = false
-//   emit('cropped', null)
-//   emit('close')
-// }
-//
-// const emitCrop = () => {
-//   if (!cropperRef.value) return
-//   const result = cropperRef.value.getResult()
-//   if (!result || !result.canvas) return
-//
-//   result.canvas.toBlob((blob) => {
-//     if (!blob) return
-//
-//     const reader = new FileReader()
-//     reader.onloadend = () => {
-//       const base64 = reader.result
-//       const uniqueName = `logo-${Date.now()}.png`
-//       const file = new File([blob], uniqueName, {type: 'image/png'})
-//
-//       file.preview = base64
-//
-//       emit('cropped', file)
-//     }
-//     reader.readAsDataURL(blob)
-//   }, 'image/png')
-// }
-//
-//
-// watch(zoomLevel, (newZoom) => {
-//   applyZoom()
-// })
+import {ref, watch} from 'vue'
+import {Cropper} from 'vue-advanced-cropper'
+import 'vue-advanced-cropper/dist/style.css'
+
+const props = defineProps({
+  src: String,
+})
+const showDeleteConfirm = ref(false)
+const emit = defineEmits(['cropped', 'close'])
+
+const cropperRef = ref(null)
+const zoomLevel = ref(1)
+const minZoom = 0
+const maxZoom = 1
+let previousZoom = 1
+
+const applyZoom = () => {
+  const cropper = cropperRef.value
+  if (cropper) {
+    const direction = zoomLevel.value > previousZoom ? 'in' : 'out'
+    cropper.zoom(zoomLevel.value / previousZoom)
+    previousZoom = zoomLevel.value
+  }
+}
+
+const confirmDelete = () => {
+  showDeleteConfirm.value = false
+  emit('cropped', null)
+  emit('close')
+}
+
+const emitCrop = () => {
+  if (!cropperRef.value) return
+  const result = cropperRef.value.getResult()
+  if (!result || !result.canvas) return
+
+  result.canvas.toBlob((blob) => {
+    if (!blob) return
+
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      const base64 = reader.result
+      const uniqueName = `logo-${Date.now()}.png`
+      const file = new File([blob], uniqueName, {type: 'image/png'})
+
+      file.preview = base64
+
+      emit('cropped', file)
+    }
+    reader.readAsDataURL(blob)
+  }, 'image/png')
+}
+
+
+watch(zoomLevel, (newZoom) => {
+  applyZoom()
+})
 </script>
 <template>
-<!--  <div>-->
-<!--    <div class="header">-->
-<!--      <button @click="$emit('close')">&times;</button>-->
-<!--    </div>-->
-<!--    <cropper ref="cropperRef" class="checkerboard-bg" :src="src" :stencil-props="{ aspectRatio: 1 }"/>-->
-<!--    <div>-->
-<!--      <div class="zoom-container">-->
-<!--        <label class="zoom-label">Zoom</label>-->
-<!--        <div class="zoom-controls">-->
-<!--          <button @click="decreaseZoom" class="zoom-btn">−</button>-->
-<!--          <input type="range" :min="minZoom" :max="maxZoom" step="0.1" v-model="zoomLevel" @input="applyZoom"-->
-<!--                 class="zoom-slider"/>-->
-<!--          <button @click="increaseZoom" class="zoom-btn">+</button>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div>-->
-<!--        <button @click="showDeleteConfirm = true" class="btn-change">Delete Image</button>-->
-<!--        <button @click="emitCrop" class="btn-add">Add Image</button>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <teleport to="body">-->
-<!--    <div v-if="showDeleteConfirm" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">-->
-<!--      <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-[400px] text-left">-->
-<!--        <h3 class="text-lg font-semibold mb-4">Excluir Imagem</h3>-->
-<!--        <p class="mb-8">Deseja excluir a imagem selecionada?-->
-<!--          Você precisará selecionar outra imagem-->
-<!--          caso confirme esta ação.</p>-->
-<!--        <div class="flex justify-around gap-2 mt-7">-->
-<!--          <v-btn @click="showDeleteConfirm = false" variant="outlined" class="btn-change">Cancelar</v-btn>-->
-<!--          <v-btn @click="confirmDelete" color="primary" class="btn-add">Excluir Imagem</v-btn>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </teleport>-->
+  <div>
+    <div class="header">
+      <button @click="$emit('close')">&times;</button>
+    </div>
+    <cropper ref="cropperRef" class="checkerboard-bg" :src="src" :stencil-props="{ aspectRatio: 1 }"/>
+    <div>
+      <div class="zoom-container">
+        <label class="zoom-label">Zoom</label>
+        <div class="zoom-controls">
+          <button @click="decreaseZoom" class="zoom-btn">−</button>
+          <input type="range" :min="minZoom" :max="maxZoom" step="0.1" v-model="zoomLevel" @input="applyZoom"
+                 class="zoom-slider"/>
+          <button @click="increaseZoom" class="zoom-btn">+</button>
+        </div>
+      </div>
+      <div>
+        <button @click="showDeleteConfirm = true" class="btn-change">Delete Image</button>
+        <button @click="emitCrop" class="btn-add">Add Image</button>
+      </div>
+    </div>
+  </div>
+  <teleport to="body">
+    <div v-if="showDeleteConfirm" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-[400px] text-left">
+        <h3 class="text-lg font-semibold mb-4">Excluir Imagem</h3>
+        <p class="mb-8">Deseja excluir a imagem selecionada?
+          Você precisará selecionar outra imagem
+          caso confirme esta ação.</p>
+        <div class="flex justify-around gap-2 mt-7">
+          <v-btn @click="showDeleteConfirm = false" variant="outlined" class="btn-change">Cancelar</v-btn>
+          <v-btn @click="confirmDelete" color="primary" class="btn-add">Excluir Imagem</v-btn>
+        </div>
+      </div>
+    </div>
+  </teleport>
 </template>
 <style scoped>
 .header{
