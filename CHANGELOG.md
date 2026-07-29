@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 [v0.4.4] - 2025-04-11
 
+## v0.5.2
+
+[compare changes](https://github.com/4sllan/six-dropzone/compare/v0.5.1...v0.5.2)
+
+### 💅 Refactors
+
+- **deps:** Update package dependencies and lockfile ([1ae73e6](https://github.com/4sllan/six-dropzone/commit/1ae73e6))
+
+### 🏡 Chore
+
+- **release:** V0.4.10 ([a3b6fd5](https://github.com/4sllan/six-dropzone/commit/a3b6fd5))
+
+### ❤️ Contributors
+
+- Aslan.gama <aslan.gama@sixchains.com.br>
+
 ## v0.5.1
 
 [compare changes](https://github.com/4sllan/six-dropzone/compare/v0.4.9...v0.5.1)
