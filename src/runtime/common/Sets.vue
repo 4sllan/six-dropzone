@@ -1,33 +1,33 @@
 <script setup lang="ts">
-import {ref, onMounted, watch, nextTick} from "vue";
-import type {PropType} from 'vue';
-import {backgroundImage} from "../utils";
+import { ref, onMounted, watch, nextTick } from 'vue';
+import type { PropType } from 'vue';
+import { backgroundImage } from '../utils';
 
 const props = defineProps({
   data: {
-    type: [String, Object, Array] as PropType<string | File[]>,
-    required: true
+    type: Array as PropType<File[]>,
+    required: true,
   },
 });
 
 const emit = defineEmits<{
-  (event: "update:clear", value: string | File | File[] | null): void;
+  (event: 'update:clear', value: File[] | null): void;
 }>();
-
 
 const overlay = ref<boolean[]>([]);
 const elRef = ref<HTMLElement[]>([]);
-
 
 const updatePreviews = async () => {
   await nextTick();
   props.data.forEach((item, i) => {
     const el = elRef.value[i];
-    if (el) {backgroundImage(item, el);}
+    if (el) {
+      backgroundImage(item, el);
+    }
   });
 };
 
-const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) => {
+const dropzoneClearMultiple = (index: number) => {
   if (Array.isArray(props.data)) {
     const newData = [...props.data];
     newData.splice(index, 1);
@@ -35,9 +35,13 @@ const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) =>
   }
 };
 
-watch(() => props.data, () => {
-  updatePreviews();
-}, {deep: true});
+watch(
+  () => props.data,
+  () => {
+    updatePreviews();
+  },
+  { deep: true }
+);
 
 onMounted(() => {
   updatePreviews();
@@ -48,14 +52,14 @@ onMounted(() => {
   <div class="__dpzSets">
     <template v-for="(item, index) in props.data" :key="index">
       <div
-          class="__dpz"
-          ref="elRef"
-          @mouseover="overlay[index] = true"
-          @mouseleave="overlay[index] = false"
-          :class="{'_overlay' : overlay[index]}"
+        class="__dpz"
+        ref="elRef"
+        @mouseover="overlay[index] = true"
+        @mouseleave="overlay[index] = false"
+        :class="{ _overlay: overlay[index] }"
       >
-        <div class="content" @click.prevent="dropzoneClearMultiple(item, index, elRef)">
-          <slot name="componentIcon"/>
+        <div class="content" @click.prevent="dropzoneClearMultiple(index)">
+          <slot name="componentIcon" />
         </div>
       </div>
     </template>
@@ -101,7 +105,7 @@ onMounted(() => {
 }
 
 ._overlay::before {
-  content: "";
+  content: '';
   top: 0;
   left: 0;
   position: absolute;

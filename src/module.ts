@@ -1,27 +1,27 @@
 import { createResolver, defineNuxtModule, addComponent } from '@nuxt/kit';
+import type { Nuxt } from '@nuxt/schema';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface ModuleOptions {}
+type ModuleOptions = Record<string, never>;
 
-const PACKAGE_NAME: string = 'Six-dropzone';
+const PACKAGE_NAME = 'Six-dropzone';
 
 export default defineNuxtModule<ModuleOptions>({
-    meta: {
-        name: PACKAGE_NAME,
-        configKey: 'SixDropzone',
-        compatibility: {
-            nuxt: '^4.0.0',
-        },
+  meta: {
+    name: PACKAGE_NAME,
+    configKey: 'SixDropzone',
+    compatibility: {
+      nuxt: '^4.0.0',
     },
-    setup(_: ModuleOptions, nuxt) {
-        const { resolve } = createResolver(import.meta.url);
+  },
+  setup(_: ModuleOptions, nuxt: Nuxt) {
+    const { resolve } = createResolver(import.meta.url);
 
-        addComponent({
-            name: 'six-dropzone',
-            filePath: resolve('./runtime/Dropzone.vue'),
-            pascalName: 'SixDropzone',
-            global: true,
-            mode: 'all',
-        });
-    },
+    addComponent({
+      name: 'six-dropzone',
+      filePath: resolve('./runtime/Dropzone.vue'),
+      pascalName: 'SixDropzone',
+      global: true,
+      mode: 'all',
+    });
+  },
 });

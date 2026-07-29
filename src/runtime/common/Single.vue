@@ -1,50 +1,52 @@
 <script setup lang="ts">
-import {ref, watch, nextTick} from "vue";
-import type {PropType} from 'vue';
-import {backgroundImage} from "../utils";
+import { ref, watch, nextTick } from 'vue';
+import type { PropType } from 'vue';
+import { backgroundImage } from '../utils';
 
 const props = defineProps({
   data: {
-    type: [String, Object, Array] as PropType<string | File>,
-    required: true
+    type: Object as PropType<File>,
+    required: true,
   },
 });
 
 const emit = defineEmits<{
-  (event: "update:clear", value: string | null): void;
+  (event: 'update:clear', value: null): void;
 }>();
 
-const overlay = ref<boolean>(false);
-const elRef = ref<HTMLElement | null>(null)
+const overlay = ref(false);
+const elRef = ref<HTMLElement | null>(null);
 
 const dropzoneClear = () => {
   emit('update:clear', null);
 };
 
-
 const updateBackground = async () => {
-  await nextTick()
+  await nextTick();
   if (elRef.value) {
-    backgroundImage(props.data, elRef.value)
+    backgroundImage(props.data, elRef.value);
   }
-}
+};
 
-watch(() => props.data, () => {
-  updateBackground()
-}, { immediate: true })
-
+watch(
+  () => props.data,
+  () => {
+    updateBackground();
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
   <div
-      ref="elRef"
-      class="__dpz"
-      @mouseover="overlay = true"
-      @mouseleave="overlay = false"
-      :class="{'_overlay' : overlay}"
+    ref="elRef"
+    class="__dpz"
+    @mouseover="overlay = true"
+    @mouseleave="overlay = false"
+    :class="{ _overlay: overlay }"
   >
     <div class="content" @click.prevent="dropzoneClear">
-      <slot name="componentIcon"/>
+      <slot name="componentIcon" />
     </div>
   </div>
 </template>
@@ -66,7 +68,6 @@ watch(() => props.data, () => {
     justify-content: center;
     align-items: center;
     transform: translate(-50%, -50%);
-
   }
 }
 
@@ -76,7 +77,7 @@ watch(() => props.data, () => {
 }
 
 ._overlay::before {
-  content: "";
+  content: '';
   top: 0;
   left: 0;
   position: absolute;

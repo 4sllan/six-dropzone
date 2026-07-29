@@ -1,5 +1,5 @@
-import Sets from "./Sets.vue"
-import Single from "./Single.vue"
+import Sets from './Sets.vue';
+import Single from './Single.vue';
 
-export {Sets, Single}
-export default {Sets, Single}
+export { Sets, Single };
+export default { Sets, Single };
