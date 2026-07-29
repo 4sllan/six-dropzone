@@ -1,6 +1,6 @@
 {
   "name": "six-dropzone",
-  "version": "0.4.9",
+  "version": "0.4.10",
   "description": "A powerful and flexible dropzone module for Nuxt.js 4, providing seamless file upload functionality with drag-and-drop support",
   "repository": "https://github.com/4sllan/six-dropzone",
   "author": "Aslan Gama <@4slan>",
