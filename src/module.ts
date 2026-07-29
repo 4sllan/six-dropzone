@@ -1,5 +1,6 @@
 import { createResolver, defineNuxtModule, addComponent } from '@nuxt/kit';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface ModuleOptions {}
 
 const PACKAGE_NAME: string = 'Six-dropzone';

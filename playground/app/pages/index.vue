@@ -94,7 +94,7 @@ const applyCroppedMultiple = (file, index) => {
         :accept="['image/png', 'image/jpeg']"
         :drop-mounted="url"
     >
-      <template v-slot:icon>
+      <template #icon>
         <div style="color:white">X</div>
       </template>
     </SixDropzone>
@@ -108,8 +108,7 @@ const applyCroppedMultiple = (file, index) => {
           @update:model-value="modelValueFileMultiple"
           :drop-mounted="urlsMultiple"
           multiple
-      >
-      </SixDropzone>
+      />
       <button @click="$refs.eltMultiple.addFile()">Add File</button>
       <button @click="$refs.eltMultiple.clearFile()">clear File</button>
     </div>
@@ -119,10 +118,9 @@ const applyCroppedMultiple = (file, index) => {
       <SixDropzone
           id="dropCropper"
           v-model="photoFileCropper"
-          @update:modelValue="(files) => openCropper(files)"
+          @update:model-value="(files) => openCropper(files)"
           :accept="['image/png', 'image/jpeg']"
-      >
-      </SixDropzone>
+      />
       <div v-if="cropperModal" class="--overlay">
         <div class="--modal">
           <ImageCropper :src="imageToCrop" @cropped="applyCropped" @close="cropperModal = false"/>
@@ -134,12 +132,11 @@ const applyCroppedMultiple = (file, index) => {
           ref="eltMultipleCropper"
           id="dropCropperMultiple"
           v-model="photoFileCropperMultiple"
-          @update:modelValue="(files) => openCropperMultiple(files)"
+          @update:model-value="(files) => openCropperMultiple(files)"
           :accept="['image/png', 'image/jpeg']"
           multiple
-      >
-      </SixDropzone>
-      <template v-for="(item, index) in photoFileCropperMultiple">
+      />
+      <template v-for="(item, index) in photoFileCropperMultiple" :key="index">
         <div v-if="cropperModalMultiple[index]" class="--overlay">
           <div class="--modal">
             <ImageCropper
