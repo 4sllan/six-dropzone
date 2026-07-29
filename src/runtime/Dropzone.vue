@@ -1,37 +1,35 @@
 <script setup lang="ts">
-import {ref, onMounted, watch, nextTick, type Slot,PropType} from 'vue';
-import {defu} from 'defu';
-import {imageUrlToBase64, dataURLtoFile, isFileAccepted} from "./utils"
-
-import {Sets, Single} from "./common"
+import { ref, onMounted, watch, nextTick, type PropType } from 'vue';
+import { imageUrlToBase64, dataURLtoFile, isFileAccepted } from './utils';
+import { Sets, Single } from './common';
 
 defineOptions({
   components: {
     Sets,
-    Single
-  }
+    Single,
+  },
 });
 
 const props = defineProps({
   id: {
     type: String,
-    default: () => `sixDrop-${Math.random().toString(36).substr(2, 9)}`
+    default: () => `sixDrop-${Math.random().toString(36).slice(2, 11)}`,
   },
   modelValue: {
     type: [String, Object, Array] as PropType<string | File | File[] | null>,
-    default: null
+    default: null,
   },
   dropMounted: {
     type: [String, Array] as PropType<string | string[]>,
-    default: ''
+    default: '',
   },
   label: {
     type: String,
-    default: 'Select File'
+    default: 'Select File',
   },
   multiple: {
     type: Boolean,
-    default: false
+    default: false,
   },
   accept: {
     type: [String, Array] as PropType<string | string[]>,
@@ -39,24 +37,25 @@ const props = defineProps({
   },
   errorMessages: {
     type: String,
-    default: ''
-  }
+    default: '',
+  },
 });
 
 const emit = defineEmits<{
-  (event: "update:modelValue" | "change", value: string | File | File[] | null): void;
+  (event: 'update:modelValue' | 'change', value: string | File | File[] | null): void;
 }>();
-
 
 const dropzoneFile = ref<File | File[] | null>(null);
 const dropzoneRef = ref<HTMLInputElement | null>(null);
-const active = ref<boolean>(false);
+const active = ref(false);
 
 const toggleActive = (e: DragEvent) => {
-  if (!e.dataTransfer) {return;}
+  if (!e.dataTransfer) {
+    return;
+  }
 
   const files = Array.from(e.dataTransfer.files);
-  const acceptedFiles = files.filter(file => isFileAccepted(file, props.accept));
+  const acceptedFiles = files.filter((file) => isFileAccepted(file, props.accept));
 
   if (props.multiple) {
     dropzoneFile.value = acceptedFiles;
@@ -68,10 +67,14 @@ const toggleActive = (e: DragEvent) => {
   emit('update:modelValue', dropzoneFile.value);
 };
 const selectedFile = () => {
-  if (!dropzoneRef.value || !dropzoneRef.value.files) {return;}
+  if (!dropzoneRef.value || !dropzoneRef.value.files) {
+    return;
+  }
 
   if (props.multiple) {
-    dropzoneFile.value = (dropzoneFile.value || []).concat(Array.from(dropzoneRef.value?.files || []));
+    dropzoneFile.value = (dropzoneFile.value || []).concat(
+      Array.from(dropzoneRef.value?.files || [])
+    );
   } else {
     dropzoneFile.value = dropzoneRef.value.files[0];
   }
@@ -85,12 +88,18 @@ const addFile = () => {
 const clearFile = () => {
   dropzoneFile.value = null;
   emit('update:modelValue', dropzoneFile.value);
-  dropzoneRef.value.value = '';
+  if (dropzoneRef.value) {
+    dropzoneRef.value.value = '';
+  }
 };
 
-watch(() => props.modelValue, (elt) => {
-  dropzoneFile.value = elt;
-}, {immediate: true})
+watch(
+  () => props.modelValue,
+  (elt) => {
+    dropzoneFile.value = elt;
+  },
+  { immediate: true }
+);
 
 onMounted(() => {
   setTimeout(async () => {
@@ -99,10 +108,10 @@ onMounted(() => {
 
       try {
         const files = await Promise.all(
-            props.dropMounted.map(async (value, key) => {
-              const response = await imageUrlToBase64(value);
-              return dataURLtoFile(response, `photo_${key}`);
-            })
+          props.dropMounted.map(async (value, key) => {
+            const response = await imageUrlToBase64(value);
+            return dataURLtoFile(response, `photo_${key}`);
+          })
         );
         dropzoneFile.value = files;
         emit('update:modelValue', dropzoneFile.value);
@@ -126,35 +135,36 @@ onMounted(() => {
 
 defineExpose({
   addFile,
-  clearFile
-})
-
+  clearFile,
+});
 </script>
 
 <template>
   <div
-      @dragenter.prevent="toggleActive"
-      @dragleave.prevent="toggleActive"
-      @dragover.prevent
-      @drop.prevent="toggleActive"
-      :class="{ 'active-dropzone': active}"
-      class="dropzone"
+    @dragenter.prevent="toggleActive"
+    @dragleave.prevent="toggleActive"
+    @dragover.prevent
+    @drop.prevent="toggleActive"
+    :class="{ 'active-dropzone': active }"
+    class="dropzone"
   >
     <div v-if="!dropzoneFile" class="dropzone_content">
-      <slot name="default"/>
+      <slot name="default" />
       <label :for="id">{{ label }}</label>
     </div>
     <template v-else-if="!props.multiple">
-      <Single
-          :data="dropzoneFile"
-          @update:clear="clearFile"
-      >
+      <Single :data="dropzoneFile" @update:clear="clearFile">
         <template #componentIcon>
           <slot name="icon">
-            <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="15" y1="9" x2="9" y2="15"/>
-              <line x1="9" y1="9" x2="15" y2="15"/>
+            <svg
+              fill="none"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="15" y1="9" x2="9" y2="15" />
+              <line x1="9" y1="9" x2="15" y2="15" />
             </svg>
           </slot>
         </template>
@@ -162,28 +172,37 @@ defineExpose({
     </template>
     <template v-else>
       <Sets
-          :data="dropzoneFile"
-          @update:clear="(elt) => {dropzoneFile = elt}"
+        :data="dropzoneFile"
+        @update:clear="
+          (elt: File[] | null) => {
+            dropzoneFile = elt;
+          }
+        "
       >
         <template #componentIcon>
           <slot name="icon">
-            <svg fill="none" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="15" y1="9" x2="9" y2="15"/>
-              <line x1="9" y1="9" x2="15" y2="15"/>
+            <svg
+              fill="none"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="15" y1="9" x2="9" y2="15" />
+              <line x1="9" y1="9" x2="15" y2="15" />
             </svg>
           </slot>
         </template>
       </Sets>
     </template>
     <input
-        type="file"
-        :id="id"
-        class="dropzoneFile"
-        @change="selectedFile"
-        :multiple="multiple"
-        :accept="Array.isArray(accept) ? accept.join(',') : accept"
-        ref="dropzoneRef"
+      type="file"
+      :id="id"
+      class="dropzoneFile"
+      @change="selectedFile"
+      :multiple="multiple"
+      :accept="Array.isArray(accept) ? accept.join(',') : accept"
+      ref="dropzoneRef"
     />
     <div class="input__details" v-if="props.errorMessages">
       <div class="messages" role="alert" aria-live="polite">
@@ -209,11 +228,10 @@ defineExpose({
   transition: 0.3s ease all;
   padding: 1rem;
 
-
   label {
     padding: 8px 12px;
     color: #fff;
-    background-color: #9C9FB9;
+    background-color: #9c9fb9;
     transition: 0.3s ease all;
   }
 

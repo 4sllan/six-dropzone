@@ -3,7 +3,6 @@
 <p align="center">6 Dropzone support for Nuxt </p>
 </div>
 
-
 <br>
 
 [![npm version](https://img.shields.io/npm/v/six-dropzone/latest.svg?style=flat-square&colorA=18181B&colorB=28CF8D)](https://www.npmjs.com/package/six-dropzone)
@@ -14,7 +13,6 @@
 
 [Demo online](https://codesandbox.io/p/devbox/jgrd5q)
 
-
 ---
 
 #### Table of Content
@@ -24,9 +22,9 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [API](#api)
-    * [Props](#props)
-    * [Events](#events)
-    * [Slots](#slots)
+  - [Props](#props)
+  - [Events](#events)
+  - [Slots](#slots)
 
 ## Features
 
@@ -46,9 +44,9 @@ npx nuxi@latest module add six-dropzone
 
 ### Config
 
-***nuxt.config.js***
+_**nuxt.config.js**_
 
-``` js
+```js
 {
      modules: [
         'six-dropzone',
@@ -60,28 +58,27 @@ npx nuxi@latest module add six-dropzone
 ## Usage
 
 ```html
-
 <script setup>
-    const photo = ref()
-    const drop = (e) => {
-        console.log(e.dataTransfer.files[0], 'drop')
-    }
-    const selectedFile = (e) => {
-        console.log(e, 'change')
-    };
-    const modelValue = (e) => {
-        console.log(e, 'model-value')
-    }
+  const photo = ref();
+  const drop = (e) => {
+    console.log(e.dataTransfer.files[0], 'drop');
+  };
+  const selectedFile = (e) => {
+    console.log(e, 'change');
+  };
+  const modelValue = (e) => {
+    console.log(e, 'model-value');
+  };
 </script>
 <template>
-    <SixDropzone
-            v-model="photo"
-            @drop.prevent="drop"
-            @change="selectedFile"
-            @update:model-value="modelValue"
-            :accept="['image/png', 'image/jpeg']"
-            :drop-mounted="url"
-    ></SixDropzone>
+  <SixDropzone
+    v-model="photo"
+    @drop.prevent="drop"
+    @change="selectedFile"
+    @update:model-value="modelValue"
+    :accept="['image/png', 'image/jpeg']"
+    :drop-mounted="url"
+  ></SixDropzone>
 </template>
 ```
 
@@ -90,17 +87,17 @@ npx nuxi@latest module add six-dropzone
 ### Props
 
 | Name             | Type              | Default Value | Description                                                                                                                                                                              |
-|------------------|-------------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ---------------- | ----------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `dropMounted`    | `String`          | `undefined`   | The image URL.                                                                                                                                                                           |
 | `label`          | `String`          | `Select File` | Sets the button text                                                                                                                                                                     |
 | `error-messages` | `String/String[]` | `[]`          | Puts the input in an error state and passes through custom error messages. Will be combined with any validations that occur from the rules prop. This field will not trigger validation. |
 | `accept`         | `String/String[]` | `" "`         | Defines the types of files that are allowed. You can pass a single string (e.g., 'image/*') or an array of strings (e.g., ['image/png', 'image/jpeg']).                                  |
-| `multiple`       | `Boolean`         | `false`       | Allows uploading multiple files if set to true.                                                                                                                                          |                                                                                                                                        
+| `multiple`       | `Boolean`         | `false`       | Allows uploading multiple files if set to true.                                                                                                                                          |
 
 ### Events
 
-| Name                | Type     | Description                                               | 
-|---------------------|----------|-----------------------------------------------------------|
+| Name                | Type     | Description                                               |
+| ------------------- | -------- | --------------------------------------------------------- |
 | `drop`              | `[File]` | drop value of the component.                              |
 | `change`            | `[File]` | value of the component.                                   |
 | `update:modelValue` | `[File]` | Event that is emitted when the component’s model changes. |
@@ -109,8 +106,8 @@ npx nuxi@latest module add six-dropzone
 
 ### Slots
 
-| Name      | Description           | 
-|-----------|-----------------------|
+| Name      | Description           |
+| --------- | --------------------- |
 | `Default` | The default Vue slot. |
 | `Icon`    | change or close icons |
 
@@ -118,9 +115,6 @@ npx nuxi@latest module add six-dropzone
 
 Released under [MIT](/LICENSE) by [@4slan](https://github.com/4sllan).
 
-
 [license]: https://img.shields.io/github/license/4sllan/six-dropzone?style=flat-square&colorA=18181B&colorB=28CF8D
-
 [nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
-
 [nuxt-href]: https://nuxt.com

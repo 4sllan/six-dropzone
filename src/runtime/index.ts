@@ -1,4 +1,4 @@
-import SixDropzone from './Dropzone.vue'
+import SixDropzone from './Dropzone.vue';
 
-export {SixDropzone}
-export default SixDropzone
+export { SixDropzone };
+export default SixDropzone;

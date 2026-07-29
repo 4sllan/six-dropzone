@@ -1,7 +1,36 @@
+# Dependencies
 node_modules
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Build outputs
 dist
 .nuxt
 .output
 .nitro
+
+# Testing
 coverage
+
+# Development
 playground
+
+# IDE
+.idea
+.vscode
+
+# System
+.DS_Store
+*.log
+
+# Git
+.git
+.github
+
+# Documentation
+CHANGELOG.md
+LICENSE
+
+# Config
+.nuxtrc
