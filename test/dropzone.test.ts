@@ -1,16 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { mount } from '@vue/test-utils';
+import { mount } from '`@vue/test-utils`';
 import Dropzone from '../src/runtime/Dropzone.vue';
 
 describe('Dropzone', () => {
-    beforeEach(() => {
-        vi.useFakeTimers();
-    });
-
     afterEach(() => {
         vi.restoreAllMocks();
     });
-
     describe('props', () => {
         it('should render with default props', () => {
             const wrapper = mount(Dropzone, {
