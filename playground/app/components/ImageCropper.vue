@@ -4,7 +4,10 @@ import {Cropper} from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css'
 
 const props = defineProps({
-  src: String,
+  src: {
+    type: String,
+    default: ''
+  },
 })
 const showDeleteConfirm = ref(false)
 const emit = defineEmits(['cropped', 'close'])
@@ -31,12 +34,12 @@ const confirmDelete = () => {
 }
 
 const emitCrop = () => {
-  if (!cropperRef.value) return
+  if (!cropperRef.value) {return}
   const result = cropperRef.value.getResult()
-  if (!result || !result.canvas) return
+  if (!result || !result.canvas) {return}
 
   result.canvas.toBlob((blob) => {
-    if (!blob) return
+    if (!blob) {return}
 
     const reader = new FileReader()
     reader.onloadend = () => {
@@ -68,7 +71,8 @@ watch(zoomLevel, (newZoom) => {
         <label class="zoom-label">Zoom</label>
         <div class="zoom-controls">
           <button @click="decreaseZoom" class="zoom-btn">−</button>
-          <input type="range" :min="minZoom" :max="maxZoom" step="0.1" v-model="zoomLevel" @input="applyZoom"
+          <input
+type="range" :min="minZoom" :max="maxZoom" step="0.1" v-model="zoomLevel" @input="applyZoom"
                  class="zoom-slider"/>
           <button @click="increaseZoom" class="zoom-btn">+</button>
         </div>

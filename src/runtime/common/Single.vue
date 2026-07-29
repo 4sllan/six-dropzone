@@ -44,7 +44,7 @@ watch(() => props.data, () => {
       :class="{'_overlay' : overlay}"
   >
     <div class="content" @click.prevent="dropzoneClear">
-      <slot name="componentIcon"></slot>
+      <slot name="componentIcon"/>
     </div>
   </div>
 </template>

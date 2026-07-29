@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import {ref, onMounted, watch, nextTick, type Slot} from 'vue';
-import type {PropType} from 'vue';
+import {ref, onMounted, watch, nextTick, type Slot,PropType} from 'vue';
 import {defu} from 'defu';
 import {imageUrlToBase64, dataURLtoFile, isFileAccepted} from "./utils"
 
@@ -16,12 +15,11 @@ defineOptions({
 const props = defineProps({
   id: {
     type: String,
-    default: 'sixDrop',
-    required: true
+    default: () => `sixDrop-${Math.random().toString(36).substr(2, 9)}`
   },
   modelValue: {
-    type: [String, Object, Array] as PropType<string | File | File[]>,
-    required: false
+    type: [String, Object, Array] as PropType<string | File | File[] | null>,
+    default: null
   },
   dropMounted: {
     type: [String, Array] as PropType<string | string[]>,
@@ -46,17 +44,16 @@ const props = defineProps({
 });
 
 const emit = defineEmits<{
-  (event: "update:modelValue", value: string | File | File[] | null): void;
-  (event: "change", value: string | File | File[] | null): void;
+  (event: "update:modelValue" | "change", value: string | File | File[] | null): void;
 }>();
 
 
-let dropzoneFile = ref<File | File[] | null>(null);
+const dropzoneFile = ref<File | File[] | null>(null);
 const dropzoneRef = ref<HTMLInputElement | null>(null);
 const active = ref<boolean>(false);
 
 const toggleActive = (e: DragEvent) => {
-  if (!e.dataTransfer) return;
+  if (!e.dataTransfer) {return;}
 
   const files = Array.from(e.dataTransfer.files);
   const acceptedFiles = files.filter(file => isFileAccepted(file, props.accept));
@@ -71,7 +68,7 @@ const toggleActive = (e: DragEvent) => {
   emit('update:modelValue', dropzoneFile.value);
 };
 const selectedFile = () => {
-  if (!dropzoneRef.value || !dropzoneRef.value.files) return;
+  if (!dropzoneRef.value || !dropzoneRef.value.files) {return;}
 
   if (props.multiple) {
     dropzoneFile.value = (dropzoneFile.value || []).concat(Array.from(dropzoneRef.value?.files || []));
@@ -144,7 +141,7 @@ defineExpose({
       class="dropzone"
   >
     <div v-if="!dropzoneFile" class="dropzone_content">
-      <slot name="default"></slot>
+      <slot name="default"/>
       <label :for="id">{{ label }}</label>
     </div>
     <template v-else-if="!props.multiple">

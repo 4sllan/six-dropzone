@@ -23,24 +23,15 @@ const updatePreviews = async () => {
   await nextTick();
   props.data.forEach((item, i) => {
     const el = elRef.value[i];
-    if (el) backgroundImage(item, el);
+    if (el) {backgroundImage(item, el);}
   });
 };
 
 const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) => {
   if (Array.isArray(props.data)) {
-    props.data.splice(index, 1);
-    setTimeout(() => {
-      let i = 0;
-      ref.forEach(elt => {
-        backgroundImage(props.data?.[i] || null, elt);
-        i++;
-      });
-      emit('update:clear', props.data);
-    }, 5);
-    if (!props.data.length) {
-      emit('update:clear', null);
-    }
+    const newData = [...props.data];
+    newData.splice(index, 1);
+    emit('update:clear', newData.length ? newData : null);
   }
 };
 
@@ -55,7 +46,7 @@ onMounted(() => {
 
 <template>
   <div class="__dpzSets">
-    <template v-for="(item, index) in props.data">
+    <template v-for="(item, index) in props.data" :key="index">
       <div
           class="__dpz"
           ref="elRef"
@@ -64,7 +55,7 @@ onMounted(() => {
           :class="{'_overlay' : overlay[index]}"
       >
         <div class="content" @click.prevent="dropzoneClearMultiple(item, index, elRef)">
-          <slot name="componentIcon"></slot>
+          <slot name="componentIcon"/>
         </div>
       </div>
     </template>
