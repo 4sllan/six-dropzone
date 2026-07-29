@@ -31,14 +31,7 @@ const dropzoneClearMultiple = (item: File, index: number, ref: HTMLElement[]) =>
   if (Array.isArray(props.data)) {
     const newData = [...props.data];
     newData.splice(index, 1);
-    setTimeout(() => {
-      let i = 0;
-      ref.forEach(elt => {
-        backgroundImage(newData?.[i] || null, elt);
-        i++;
-      });
-      emit('update:clear', newData.length ? newData : null);
-    }, 5);
+    emit('update:clear', newData.length ? newData : null);
   }
 };
 

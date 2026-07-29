@@ -44,7 +44,8 @@
   "dependencies": {
     "@nuxt/kit": "^4.4.8",
     "@nuxt/schema": "^4.4.8",
-    "nuxt": "^4.4.8"
+    "nuxt": "^4.4.8",
+    "vue-advanced-cropper": "^2.8.9"
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^1.16.0",

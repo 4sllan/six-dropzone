@@ -15,10 +15,10 @@ defineOptions({
 const props = defineProps({
   id: {
     type: String,
-    default: 'sixDrop'
+    default: () => `sixDrop-${Math.random().toString(36).substr(2, 9)}`
   },
   modelValue: {
-    type: [String, Object, Array] as PropType<string | File | File[]>,
+    type: [String, Object, Array] as PropType<string | File | File[] | null>,
     default: null
   },
   dropMounted: {
