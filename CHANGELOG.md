@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 
 [v0.4.4] - 2025-04-11
 
+## v0.5.1
+
+[compare changes](https://github.com/4sllan/six-dropzone/compare/v0.4.9...v0.5.1)
+
+### 🚀 Enhancements
+
+- **config:** Add autofix workflow and update CI/release ([564f3c5](https://github.com/4sllan/six-dropzone/commit/564f3c5))
+
+### 🩹 Fixes
+
+- **core:** Uncomment ImageCropper.vue component ([f19aeb3](https://github.com/4sllan/six-dropzone/commit/f19aeb3))
+
+### 💅 Refactors
+
+- **test:** Update Vitest and TypeScript config ([97f4dbd](https://github.com/4sllan/six-dropzone/commit/97f4dbd))
+- **core:** Improve ImageCropper and Dropzone modules ([1adad2b](https://github.com/4sllan/six-dropzone/commit/1adad2b))
+- **core:** Update Vue components and dependencies ([169ee7f](https://github.com/4sllan/six-dropzone/commit/169ee7f))
+
+### ❤️ Contributors
+
+- Aslan.gama <aslan.gama@sixchains.com.br>
+
 ## v0.4.9
 
 [compare changes](https://github.com/4sllan/six-dropzone/compare/v1.0.5...v0.4.9)
