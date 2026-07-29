@@ -4,4 +4,4 @@ dist
 .output
 .nitro
 coverage
-.playground
+playground
